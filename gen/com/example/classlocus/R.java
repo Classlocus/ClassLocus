@@ -31,17 +31,21 @@ public final class R {
         public static final int room_input=0x7f080003;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_building_detail=0x7f030000;
+        public static final int activity_main=0x7f030001;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
+        public static final int building__detail=0x7f070000;
+        public static final int main=0x7f070001;
     }
     public static final class string {
         public static final int action_settings=0x7f050006;
         public static final int app_name=0x7f050000;
         public static final int button_search=0x7f050005;
+        public static final int hello_world=0x7f050009;
         public static final int hint_building=0x7f050002;
         public static final int hint_room=0x7f050004;
+        public static final int title_activity_building__detail=0x7f050008;
         public static final int title_activity_main=0x7f050007;
         public static final int title_building=0x7f050001;
         public static final int title_room=0x7f050003;
