@@ -2,8 +2,15 @@
 <resources>
 
     <string name="app_name">ClassLocus</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    
+    <string name="title_building">Building</string>
+    <string name="hint_building">building name</string>
+    
+    <string name="title_room">Room</string>
+    <string name="hint_room">room number/name</string>
+    
+    <string name="button_search">Search</string>
+    
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
