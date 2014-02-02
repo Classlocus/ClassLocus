@@ -7,7 +7,7 @@
 
     <TextView 
         android:id="@+id/building_field"
-        android:text="@string/title_building"
+        android:text="@string/building_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
@@ -20,20 +20,21 @@
         android:padding="2dp" />
     
     <EditText
-   	    android:id="@+id/building_input"
-   	    android:hint="@string/hint_building"
-   	    android:inputType="textCapWords"
-   	    android:layout_width="wrap_content"
-   	    android:layout_height="wrap_content"
-   	    android:layout_alignParentRight="true"
-   	    android:layout_alignParentTop="true"
-   	    android:layout_marginRight="10dp"
-   	    android:width="280dp"
-   	    android:ems="10" />
+        android:id="@+id/building_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/building_field"
+        android:ems="10"
+        android:hint="@string/building_hint"
+        android:inputType="textCapWords"
+        android:width="280dp" />
     
 	<TextView
         android:id="@+id/room_field"
-        android:text="@string/title_room"
+        android:text="@string/room_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
@@ -47,22 +48,30 @@
 
 	<EditText
 	    android:id="@+id/room_input"
-        android:hint="@string/hint_room"
-        android:inputType="textCapWords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/building_input"
-        android:layout_marginRight="10dp"
-   	    android:width="280dp"
-   	    android:ems="10" />
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@id/building_input"
+	    android:layout_marginRight="10dp"
+	    android:layout_toRightOf="@+id/room_field"
+	    android:ems="10"
+	    android:hint="@string/room_hint"
+	    android:inputType="textCapWords"
+	    android:width="280dp" />
 	
 	<Button
-		android:text="@string/button_search"
+	    android:id="@+id/button_search"
+		android:text="@string/search_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/room_input"
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="10dp" />
+	
+	<fragment
+          android:id="@+id/map"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:name="com.google.android.gms.maps.MapFragment" />
    	
 </RelativeLayout>
