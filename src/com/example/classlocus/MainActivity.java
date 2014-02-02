@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.SearchView;
 
 public class MainActivity extends Activity{
