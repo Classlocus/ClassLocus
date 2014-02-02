@@ -11,8 +11,6 @@ import android.widget.SearchView;
 
 public class MainActivity extends Activity{
 	
-	//Button button;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
