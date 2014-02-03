@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal" >
 
+<!-- 
     <TextView 
         android:id="@+id/building_field"
         android:text="@string/building_title"
@@ -67,7 +68,8 @@
 		android:layout_below="@id/room_input"
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="10dp" />
-	
+-->
+		 
 	<fragment
           android:id="@+id/map"
           android:layout_width="match_parent"
