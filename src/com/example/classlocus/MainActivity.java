@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.SearchView;
+import android.provider.SearchRecentSuggestions;
 
 public class MainActivity extends Activity{
 	
@@ -15,13 +17,16 @@ public class MainActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
-		
-		//button = (Button) this.findViewById(R.id.button_search);
-		//button.setOnClickListener(new View.OnClickListener() {
 			
 		Intent searchIntent = getIntent();
 		if(Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
 			String query = searchIntent.getStringExtra(SearchManager.QUERY);
+			
+			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+	                SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+	        
+			suggestions.saveRecentQuery(query, null);
+			
 			//runSearch(query);
 		}
 		
@@ -44,4 +49,26 @@ public class MainActivity extends Activity{
 		return true;
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	    	case R.id.clear_history:
+	    		SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+	    		        SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+	    		suggestions.clearHistory();
+	    		return true;
+	    	case R.id.settings:
+	    		return true;
+	    	case R.id.help:
+	    		//showHelp();
+	    		return true;
+	    	case R.id.about:
+	    		//Intent aboutIntent = new Intent(MainActivity.this, Building_Detail.class);
+	    		//startActivity(aboutIntent);
+	    		return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 }
