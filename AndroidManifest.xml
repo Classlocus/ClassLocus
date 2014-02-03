@@ -46,12 +46,22 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".SearchableActivity">
+        <activity
+            android:name=".SearchableActivity">
         	<intent-filter>
         	    <action android:name="android.intent.action.SEARCH" />
         	</intent-filter>   
         	<meta-data android:name="android.app.searchable"
         	    	   android:resource="@xml/searchable" />  
+        </activity>
+        
+        <activity
+            android:name="com.example.classlocus.Building_Detail"
+            android:label="@string/title_activity_building_detail"
+            android:parentActivityName="com.example.classlocus.MainActivity" >
+        	<meta-data
+        	    android:name="android.support.PARENT_ACTIVITY"
+        	    android:value="com.example.classlocus.MainActivity" />
         </activity>
         
     </application>
