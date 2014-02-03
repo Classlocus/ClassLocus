@@ -17,13 +17,13 @@
 	     android:gravity="center_vertical"
 	     android:height="30dp"
 	     android:padding="2dp"
-	     android:text="@string/building_name"
+	     android:text="@string/building_title"
 	     android:textAppearance="?android:attr/textAppearanceMedium"
 	     android:width="75dp" />
 	 
 	  <TextView
         android:id="@+id/detail_building_value"
-        android:text="@string/building_value"
+        android:text="@string/building_hint"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
