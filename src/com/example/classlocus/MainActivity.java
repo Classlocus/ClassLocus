@@ -64,11 +64,18 @@ public class MainActivity extends Activity{
 	    		//showHelp();
 	    		return true;
 	    	case R.id.about:
-	    		Intent aboutIntent = new Intent(MainActivity.this, Building_Detail.class);
+	    		Intent aboutIntent = new Intent(MainActivity.this, BuildingDetail.class);
 	    		startActivity(aboutIntent);
 	    		return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	/*
+	@Override
+	private void setUpMapIfNeeded() {
+		// Do a null check to confirm that we have not already instantiated the map.
+		if (mMap )
+	}*/
 }

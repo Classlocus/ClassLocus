@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-public class Building_Detail extends Activity {
+public class BuildingDetail extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class Building_Detail extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.building__detail, menu);
+		getMenuInflater().inflate(R.menu.building_detail, menu);
 		return true;
 	}
 
