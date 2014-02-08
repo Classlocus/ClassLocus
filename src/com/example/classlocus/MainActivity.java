@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.provider.SearchRecentSuggestions;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +54,8 @@ public class MainActivity extends Activity{
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	    	case R.id.clear_history:
-	    		SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-	    		        SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-	    		suggestions.clearHistory();
+				ClearSearchHistory PopupAlert = new ClearSearchHistory();
+				PopupAlert.clearSearchHistory(this);
 	    		return true;
 	    	case R.id.settings:
 	    		return true;
@@ -71,4 +70,18 @@ public class MainActivity extends Activity{
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
+	
+	/*
+	private void setUpMapIfNeeded() {
+    // Do a null check to confirm that we have not already instantiated the map.
+    	if (mMap == null) {
+        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
+                            .getMap();
+        	// Check if we were successful in obtaining the map.
+        	if (mMap != null) {
+            	// The Map is verified. It is now safe to manipulate the map.
+        	}
+    	}
+	}
+	*/
 }
