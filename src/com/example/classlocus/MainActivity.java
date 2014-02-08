@@ -2,34 +2,52 @@ package com.example.classlocus;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import android.app.SearchManager;
 import android.widget.SearchView;
+import android.content.Context;
 import android.provider.SearchRecentSuggestions;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import android.widget.Toast;
+
 public class MainActivity extends Activity {
+	
+	private GoogleMap googleMap;
+	private Intent searchIntent;
+	private Intent bld_detailIntent;
+	private Intent settingsIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
 			
-		Intent searchIntent = getIntent();
+		try {
+			initializeMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+		searchIntent = getIntent();
 		if(Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
 			String query = searchIntent.getStringExtra(SearchManager.QUERY);
 			
-			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-	                SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
+			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 	        
 			suggestions.saveRecentQuery(query, null);
 			
 			//runSearch(query);
 		}
-		
 	}
 
 	@Override
@@ -54,34 +72,41 @@ public class MainActivity extends Activity {
 	    // Handle item selection
 	    switch (item.getItemId()) {
 	    	case R.id.clear_history:
-				ClearSearchHistory PopupAlert = new ClearSearchHistory();
+				ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
 				PopupAlert.clearSearchHistory(this);
 	    		return true;
-	    	case R.id.settings:
+	    	case R.id.building_detail:
+	    		bld_detailIntent = new Intent(MainActivity.this, BuildingDetail.class);
+	    		startActivity(bld_detailIntent);
 	    		return true;
 	    	case R.id.help:
-	    		//showHelp();
+	    		//helpscreen();
 	    		return true;
-	    	case R.id.about:
-	    		Intent aboutIntent = new Intent(MainActivity.this, BuildingDetail.class);
-	    		startActivity(aboutIntent);
+	    	case R.id.settings:
+	    		settingsIntent = new Intent(MainActivity.this, MapPane.class);
+	    		startActivity(settingsIntent);
 	    		return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
 	
-	/*
-	private void setUpMapIfNeeded() {
-    // Do a null check to confirm that we have not already instantiated the map.
-    	if (mMap == null) {
-        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
-                            .getMap();
-        	// Check if we were successful in obtaining the map.
-        	if (mMap != null) {
-            	// The Map is verified. It is now safe to manipulate the map.
-        	}
-    	}
-	}
-	*/
+	private void initializeMap() {		
+        if (googleMap == null) {
+        	googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            // check if map is created successfully or not
+            if (googleMap != null) {
+            	LatLng oregonStateUniversity = new LatLng(44.5598247, -123.2820478);
+         		
+        		googleMap.setMyLocationEnabled(true);
+        		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oregonStateUniversity, 13));
+        		googleMap.addMarker(new MarkerOptions()
+             		.title("Oregon State University")
+             		.snippet("A land-, sea-, and space-grant university.")
+             		.position(oregonStateUniversity));
+            } else {
+            	Toast.makeText(getApplicationContext(), "Failed to initialize Google Maps", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }	
 }

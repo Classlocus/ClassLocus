@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.provider.SearchRecentSuggestions;
 import android.app.DialogFragment;
 
-public class ClearSearchHistory extends DialogFragment implements DialogInterface.OnClickListener {
+public class ClearSearchHistoryDialog extends DialogFragment implements DialogInterface.OnClickListener {
 	
 	SearchRecentSuggestions suggestions;
 	
-	public ClearSearchHistory() {
+	public ClearSearchHistoryDialog() {
 		// default constructor
 	}
 	
