@@ -57,7 +57,7 @@
         </activity>
         
         <activity
-            android:name="com.example.classlocus.Building_Detail"
+            android:name="com.example.classlocus.BuildingDetail"
             android:label="@string/title_activity_building_detail"
             android:parentActivityName="com.example.classlocus.MainActivity" >
         	<meta-data

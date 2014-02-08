@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 	    		//showHelp();
 	    		return true;
 	    	case R.id.about:
-	    		Intent aboutIntent = new Intent(MainActivity.this, Building_Detail.class);
+	    		Intent aboutIntent = new Intent(MainActivity.this, BuildingDetail.class);
 	    		startActivity(aboutIntent);
 	    		return true;
 	        default:
