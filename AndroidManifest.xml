@@ -37,6 +37,7 @@
         <provider android:name=".SearchSuggestionProvider"
               android:authorities="com.example.SearchSuggestionProvider" />
         
+        <!-- default activity -->
         <activity
             android:name="com.example.classlocus.MainActivity"
             android:label="@string/app_name" >
@@ -47,7 +48,7 @@
         </activity>
         
         <activity
-            android:name=".SearchableActivity">
+            android:name=".SearchableActivity" >
         	<intent-filter>
         	    <action android:name="android.intent.action.SEARCH" />
         	</intent-filter>   
