@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    	xmlns:map="http://schemas.android.com/apk/res-auto" 
-    	class="com.google.android.gms.maps.MapFragment"
-		android:id="@+id/map"
-		android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false" >
+    
+    <fragment android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment" 
+		android:layout_weight="1"
+		android:layout_width="0dip"
 		android:layout_height="match_parent" />
+    
+	<FrameLayout android:id="@+id/fragment_container"
+	    android:layout_weight="1"
+    	android:layout_width="0dip"
+    	android:layout_height="match_parent" />
+	
+	<TextView
+	     android:id="@+id/article"
+	     android:layout_width="wrap_content"
+	     android:layout_height="35dp"
+	     android:layout_alignParentLeft="true"
+	     android:layout_alignParentTop="true"
+	     android:gravity="center_vertical"
+	     android:height="30dp"
+	     android:padding="2dp"
+	     android:text="@string/building_title"
+	     android:textAppearance="?android:attr/textAppearanceMedium"
+	     android:width="75dp" />
+	
+</LinearLayout>	

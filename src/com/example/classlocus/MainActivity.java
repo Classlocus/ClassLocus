@@ -1,8 +1,13 @@
 package com.example.classlocus;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.content.Intent;
+
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.*;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,19 +15,13 @@ import android.view.MenuItem;
 
 import android.app.SearchManager;
 import android.widget.SearchView;
+import android.widget.Toast;
 import android.content.Context;
 import android.provider.SearchRecentSuggestions;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import android.widget.Toast;
-
 public class MainActivity extends Activity {
 	
-	private GoogleMap googleMap;
+	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private Intent searchIntent;
 	private Intent bld_detailIntent;
 	private Intent settingsIntent;
@@ -31,19 +30,22 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
-			
-		try {
-			initializeMap();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+		
+		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+		//map.setMyLocationEnabled(true);
+		map.setBuildingsEnabled(true);
+		
+		LatLng oregonstate = new LatLng(44.5657285, -123.2788689);
+		map.addMarker(new MarkerOptions()
+     		.title("Oregon State University")
+     		.snippet("A land-, sea-, and space-grant university.")
+     		.position(oregonstate));
 		
 		searchIntent = getIntent();
 		if(Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
 			String query = searchIntent.getStringExtra(SearchManager.QUERY);
 			
 			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-	        
 			suggestions.saveRecentQuery(query, null);
 			
 			//runSearch(query);
@@ -68,6 +70,28 @@ public class MainActivity extends Activity {
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		if (checkPlayServices()) {
+			// Google Play Services are installed and GoogleMap object can be loaded
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REQUEST_CODE_RECOVER_PLAY_SERVICES:
+				if (resultCode == RESULT_CANCELED) {
+					Toast.makeText(this, "Google Play Services must be installed.", Toast.LENGTH_SHORT).show();
+					finish();
+				}
+				return;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle item selection
 	    switch (item.getItemId()) {
@@ -83,30 +107,31 @@ public class MainActivity extends Activity {
 	    		//helpscreen();
 	    		return true;
 	    	case R.id.settings:
-	    		settingsIntent = new Intent(MainActivity.this, MapPane.class);
-	    		startActivity(settingsIntent);
+	    		//settingsIntent = new Intent(MainActivity.this, Settings.class);
+	    		//startActivity(settingsIntent);
 	    		return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
 	}
 	
-	private void initializeMap() {		
-        if (googleMap == null) {
-        	googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-            // check if map is created successfully or not
-            if (googleMap != null) {
-            	LatLng oregonStateUniversity = new LatLng(44.5598247, -123.2820478);
-         		
-        		googleMap.setMyLocationEnabled(true);
-        		googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(oregonStateUniversity, 13));
-        		googleMap.addMarker(new MarkerOptions()
-             		.title("Oregon State University")
-             		.snippet("A land-, sea-, and space-grant university.")
-             		.position(oregonStateUniversity));
-            } else {
-            	Toast.makeText(getApplicationContext(), "Failed to initialize Google Maps", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }	
+	private boolean checkPlayServices() {
+		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+		
+		if (status != ConnectionResult.SUCCESS) {
+			if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
+				showErrorDialog(status);
+		    } else {
+		    	Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
+		    	finish();
+		    }
+		    return false;
+		}
+		
+		return true;
+	} 
+
+	void showErrorDialog(int code) {
+		GooglePlayServicesUtil.getErrorDialog(code, this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
+	}
 }
