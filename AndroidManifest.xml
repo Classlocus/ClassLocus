@@ -57,6 +57,15 @@
         </activity>
         
         <activity
+            android:name="com.example.classlocus.MapPane"
+            android:label="@string/title_map_pane"
+            android:parentActivityName="com.example.classlocus.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.classlocus.MainActivity" />
+        </activity>
+        
+        <activity
             android:name="com.example.classlocus.BuildingDetail"
             android:label="@string/title_activity_building_detail"
             android:parentActivityName="com.example.classlocus.MainActivity" >

@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
-	 
-	<fragment
-          android:id="@+id/map"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:name="com.google.android.gms.maps.MapFragment" />
+    android:baselineAligned="false" >
+    
+    <!--  Setting MissingPrefix to ignore is only required to circumvent a bug in the Linter linker which is included in the Android SDK.
+    	  Further details regarding this bug can be found at:	https://code.google.com/p/gmaps-api-issues/issues/detail?id=5002 
+	-->
+    
+    <fragment android:id="@+id/map"
+        class="com.google.android.gms.maps.MapFragment" 
+		android:layout_weight="1"
+		android:layout_width="0dip"
+		android:layout_height="match_parent"
+		tools:ignore="MissingPrefix"
+		map:cameraBearing="0"
+		map:cameraTargetLat="44.5657285"
+		map:cameraTargetLng="-123.2788689"
+		map:cameraTilt="30"
+		map:cameraZoom="15"
+		map:mapType="normal"
+		map:uiCompass="true"
+		map:uiRotateGestures="true"
+		map:uiScrollGestures="true"
+		map:uiTiltGestures="true"
+		map:uiZoomControls="false"
+		map:uiZoomGestures="true" />
+	
+</LinearLayout>	
    	
-</RelativeLayout>
+
+
