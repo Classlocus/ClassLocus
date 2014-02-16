@@ -36,8 +36,11 @@ public class BuildingListAdapter extends BaseAdapter {
 		return 0;
 	}
 	
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+	/*
+		
 		View v = convertView;
 		TextView text;
 		
@@ -50,6 +53,8 @@ public class BuildingListAdapter extends BaseAdapter {
 		// get the current item and set the text
 		Building item = (Building)getBuilding(position);
 		text.setText(item.getText());
+	*/
+		return convertView;
 	}
 
 }
