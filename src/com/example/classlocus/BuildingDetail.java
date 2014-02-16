@@ -1,9 +1,13 @@
 package com.example.classlocus;
 
+import com.google.android.gms.maps.model.*;
+import com.google.maps.android.SphericalUtil;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
@@ -49,4 +53,11 @@ public class BuildingDetail extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	public void buildingDistance(LatLng coord1, LatLng coord2){
+		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
+		String dString = String.valueOf(distance);
+		dString = dString + "m";
+		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
+		tv.setText(dString);
+	}
 }
