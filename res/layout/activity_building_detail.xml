@@ -33,5 +33,14 @@
         android:height="30dp"
         android:gravity="center_vertical"
         android:padding="2dp" />
-
+	  
+	  <TextView
+	      android:id="@+id/detail_building_distance"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="wrap_content"
+	      android:text="Default"
+	      android:layout_height="35dp"
+	      android:layout_below="@id/detail_building_name"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
 </RelativeLayout>
