@@ -102,26 +102,26 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle item selection
-	    switch (item.getItemId()) {
-	    	case R.id.clear_history:
-				ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
-				PopupAlert.clearSearchHistory(this);
-	    		return true;
-	    	case R.id.building_detail:
-	    		bld_detailIntent = new Intent(MainActivity.this, BuildingDetail.class);
-	    		startActivity(bld_detailIntent);
-	    		return true;
-	    	case R.id.help:
-	    		//helpscreen();
-	    		return true;
-	    	case R.id.settings:
-	    		//settingsIntent = new Intent(MainActivity.this, Settings.class);
-	    		//startActivity(settingsIntent);
-	    		return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+	    int itemId = item.getItemId();
+	    
+		if (itemId == R.id.clear_history) {
+			ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
+			PopupAlert.clearSearchHistory(this);
+			return true;
+		} else if (itemId == R.id.building_detail) {
+			bld_detailIntent = new Intent(MainActivity.this, BuildingDetail.class);
+			startActivity(bld_detailIntent);
+			return true;
+		} else if (itemId == R.id.help) {
+			//helpscreen();
+			return true;
+		} else if (itemId == R.id.settings) {
+			//settingsIntent = new Intent(MainActivity.this, Settings.class);
+			//startActivity(settingsIntent);
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	private boolean checkPlayServices() {
