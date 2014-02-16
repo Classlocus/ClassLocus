@@ -18,6 +18,10 @@ public class BuildingDetail extends Activity {
 		setContentView(R.layout.activity_building_detail);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
+		tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+		
 	}
 
 	/**
@@ -53,11 +57,10 @@ public class BuildingDetail extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void buildingDistance(LatLng coord1, LatLng coord2){
+	public String buildingDistance(LatLng coord1, LatLng coord2){
 		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
 		String dString = String.valueOf(distance);
 		dString = dString + "m";
-		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
-		tv.setText(dString);
+		return dString;
 	}
 }
