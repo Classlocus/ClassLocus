@@ -1,27 +1,36 @@
 package com.example.classlocus;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 
-import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
-import com.j256.ormlite.field.DatabaseField;
+//import android.content.Context;
+//import android.database.sqlite.SQLiteDatabase.CursorFactory;
+//import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+
 import com.j256.ormlite.table.DatabaseTable;
+import com.j256.ormlite.field.DatabaseField;
 
 @DatabaseTable(tableName = "building")
 public class Building {
-	@DatabaseField(id=true)
+	
+	@DatabaseField(generatedId=true)
 	private int id;
+	
 	@DatabaseField(unique=true)
 	private String name;
+	
 	@DatabaseField(unique=true)
-	private String abrv;
+	private String abbreviation;
+	
 	@DatabaseField
-	private int lat;
+	private double latitude;
+	
 	@DatabaseField
-	private int lng;
+	private double longitude;
+	
 	@DatabaseField(unique=true)
 	private int buildingID;
+	
 	@DatabaseField
 	private int parentLocation;
+	
 	@DatabaseField
 	private boolean accessible;
 	
@@ -29,11 +38,28 @@ public class Building {
 		//Needed for ORM
 	}
 	
-	public Building(String buildingName, String abreviation, int lt, int lg, int BID) {
-		name = buildingName;
-		abrv = abreviation;
-		lat = lt;
-		lng = lg;
-		buildingID = BID;
+	public Building(String buildingName, String buildingAbbreviation, double latitude, double longitude, int buildingId) {
+		this.name = buildingName;
+		this.abbreviation = buildingAbbreviation;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.buildingID = buildingId;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getAbbreviation() {
+		return abbreviation;
+	}
+	
+	public double[] getLatLng() {
+		double[] latLng = {latitude, longitude}; 
+		return latLng;
 	}
 }
