@@ -3,31 +3,23 @@ package com.example.classlocus;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.content.Context;
+import android.widget.Toast;
+import android.view.*;
 
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
-import java.util.ArrayList;
+import com.example.classlocus.search.*;
 import android.app.SearchManager;
 import android.widget.SearchView;
-import android.widget.Toast;
-import android.content.Context;
-import android.provider.SearchRecentSuggestions;
 
 public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
-//	private BuildingRepository repos;
-//	private BuldingListAdapter adapter;
-//	private ArrayList buildings;
-	private Intent searchIntent;
-	private Intent bld_detailIntent;
+	private Intent buildingIntent;
 	private Intent settingsIntent;
 	
 	@Override
@@ -44,24 +36,7 @@ public class MainActivity extends Activity {
      		.title("Oregon State University")
      		.snippet("A land-, sea-, and space-grant university.")
      		.position(oregonstate));
-		
-		// init the building repository
-//		repos = new BuildingRepository(this);
-//		buildings = (ArrayList)repos.getAll();
-//		adapter = new BuildingListAdapter(this, buildings);
-		
-		searchIntent = getIntent();
-		if(Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
-			String query = searchIntent.getStringExtra(SearchManager.QUERY);
-			
-			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
-			suggestions.saveRecentQuery(query, null);
-			
-			//runSearch(query);
-		}
 	}
-
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,13 +46,13 @@ public class MainActivity extends Activity {
 		
 		//Get the SearchView and set the searchable configuration
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+		SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 		
 		//Assumes current activity is the searchable activity
 		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 		searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 		
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override
@@ -111,15 +86,15 @@ public class MainActivity extends Activity {
 			PopupAlert.clearSearchHistory(this);
 			return true;
 		} else if (itemId == R.id.building_detail) {
-			bld_detailIntent = new Intent(MainActivity.this, BuildingDetail.class);
-			startActivity(bld_detailIntent);
+			buildingIntent = new Intent(MainActivity.this, BuildingDetail.class);
+			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
 			//helpscreen();
 			return true;
 		} else if (itemId == R.id.settings) {
-			//settingsIntent = new Intent(MainActivity.this, Settings.class);
-			//startActivity(settingsIntent);
+			settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
+			startActivity(settingsIntent);
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
@@ -138,7 +113,6 @@ public class MainActivity extends Activity {
 		    }
 		    return false;
 		}
-		
 		return true;
 	} 
 

@@ -22,5 +22,7 @@
     
     <string name="title_activity_building_detail">Building Detail</string>
     <string name="title_map_pane">MapPane</string>
+    
+    <string name="activity_building_found">Building Found</string>
 
 </resources>

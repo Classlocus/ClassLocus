@@ -16,7 +16,7 @@
 		android:layout_weight="1"
 		android:layout_width="0dip"
 		android:layout_height="match_parent"
-		tools:ignore="MissingPrefix"
+ 		tools:ignore="MissingPrefix"
 		map:cameraBearing="0"
 		map:cameraTargetLat="44.5657285"
 		map:cameraTargetLng="-123.2788689"

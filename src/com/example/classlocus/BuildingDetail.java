@@ -1,5 +1,6 @@
 package com.example.classlocus;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -12,17 +13,10 @@ public class BuildingDetail extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_building_detail);
-		// Show the Up button in the action bar.
-		setupActionBar();
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
+		// Enable Up / Back navigation
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
