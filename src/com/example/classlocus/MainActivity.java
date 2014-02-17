@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
 import android.app.SearchManager;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -22,6 +23,9 @@ import android.provider.SearchRecentSuggestions;
 public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
+//	private BuildingRepository repos;
+//	private BuldingListAdapter adapter;
+//	private ArrayList buildings;
 	private Intent searchIntent;
 	private Intent bld_detailIntent;
 	private Intent settingsIntent;
@@ -41,6 +45,11 @@ public class MainActivity extends Activity {
      		.snippet("A land-, sea-, and space-grant university.")
      		.position(oregonstate));
 		
+		// init the building repository
+//		repos = new BuildingRepository(this);
+//		buildings = (ArrayList)repos.getAll();
+//		adapter = new BuildingListAdapter(this, buildings);
+		
 		searchIntent = getIntent();
 		if(Intent.ACTION_SEARCH.equals(searchIntent.getAction())) {
 			String query = searchIntent.getStringExtra(SearchManager.QUERY);
@@ -52,6 +61,8 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu from XML
