@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import com.example.classlocus.database.Building;
+
 public class BuildingListAdapter extends BaseAdapter {
 
 	private Context mContext;

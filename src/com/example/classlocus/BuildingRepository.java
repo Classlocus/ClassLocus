@@ -4,6 +4,7 @@ import android.content.Context;
 import java.util.List;
 import java.sql.SQLException;
 
+import com.example.classlocus.database.Building;
 import com.j256.ormlite.dao.Dao;
 
 public class BuildingRepository {
