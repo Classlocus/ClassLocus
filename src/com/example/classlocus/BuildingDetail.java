@@ -1,12 +1,16 @@
 package com.example.classlocus;
 
+import com.google.android.gms.maps.model.*;
+import com.google.maps.android.SphericalUtil;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
-public class Building_Detail extends Activity {
+public class BuildingDetail extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +18,10 @@ public class Building_Detail extends Activity {
 		setContentView(R.layout.activity_building_detail);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
+		tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+		
 	}
 
 	/**
@@ -28,7 +36,7 @@ public class Building_Detail extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.building__detail, menu);
+		getMenuInflater().inflate(R.menu.building_detail, menu);
 		return true;
 	}
 
@@ -49,4 +57,10 @@ public class Building_Detail extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	public String buildingDistance(LatLng coord1, LatLng coord2){
+		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
+		String dString = String.valueOf(distance);
+		dString = dString + "m";
+		return dString;
+	}
 }
