@@ -27,7 +27,7 @@ public class Building {
 	}
 	
 	public String getAbbreviation() {
-		return name;
+		return abbreviation;
 	}
 	
 	public void setAbbreviation(String abbreviation) {

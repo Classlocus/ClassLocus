@@ -3,7 +3,7 @@ package com.example.classlocus.data;
 import com.example.classlocus.R;
 
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+//import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
 import android.view.View;
