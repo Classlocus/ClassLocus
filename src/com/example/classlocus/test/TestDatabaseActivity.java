@@ -1,5 +1,8 @@
-package com.example.classlocus;
+package com.example.classlocus.test;
 
+import com.example.classlocus.R;
+import com.example.classlocus.R.id;
+import com.example.classlocus.R.layout;
 import com.example.classlocus.test.*;
 import java.util.List;
 import java.util.Random;

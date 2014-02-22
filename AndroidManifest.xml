@@ -70,7 +70,7 @@
         </activity>
         
         <activity
-            android:name="com.example.classlocus.TestDatabaseActivity"
+            android:name="com.example.classlocus.test.TestDatabaseActivity"
             android:label="TestDatabaseActivity"
             android:parentActivityName="com.example.classlocus.MainActivity" >
             <meta-data

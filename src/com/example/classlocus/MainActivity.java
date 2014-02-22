@@ -13,6 +13,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import com.example.classlocus.search.*;
+import com.example.classlocus.test.TestDatabaseActivity;
+
 import android.app.SearchManager;
 import android.widget.SearchView;
 
