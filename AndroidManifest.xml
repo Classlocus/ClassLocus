@@ -32,33 +32,46 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
-    		android:value="AIzaSyC7ECFObEIXdw5axDYh-rfiNKlKb99VF1c"/>
+    		android:value="AIzaSyCtfcNstuLQEkZvvlKS_ouD40Z6Qrdpl64"/>
         
-        <provider android:name=".SearchSuggestionProvider"
+        <provider android:name="com.example.classlocus.search.SearchSuggestionProvider"
               android:authorities="com.example.SearchSuggestionProvider" />
         
         <!-- default activity -->
         <activity
             android:name="com.example.classlocus.MainActivity"
             android:label="@string/app_name" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchResultsActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
+        <!-- search results activity -->
         <activity
-            android:name=".SearchableActivity" >
-        	<intent-filter>
-        	    <action android:name="android.intent.action.SEARCH" />
-        	</intent-filter>   
-        	<meta-data android:name="android.app.searchable"
-        	    	   android:resource="@xml/searchable" />  
+            android:name=".SearchResultsActivity"
+            android:parentActivityName="com.example.classlocus.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        
+        <!-- location found activity -->
+        <activity
+            android:name="com.example.classlocus.BuildingFound"
+            android:label="@string/activity_building_found"
+            android:parentActivityName="com.example.classlocus.MainActivity" >
         </activity>
         
         <activity
-            android:name="com.example.classlocus.MapPane"
-            android:label="@string/title_map_pane"
+            android:name="com.example.classlocus.TestDatabaseActivity"
+            android:label="TestDatabaseActivity"
             android:parentActivityName="com.example.classlocus.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

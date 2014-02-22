@@ -1,4 +1,5 @@
-package com.example.classlocus;
+package com.example.classlocus.search;
+
 
 import android.content.Context;
 import android.app.AlertDialog;

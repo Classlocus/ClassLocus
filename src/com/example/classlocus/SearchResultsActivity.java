@@ -1,20 +1,44 @@
 package com.example.classlocus;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.content.Intent;
-import android.app.SearchManager;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
-public class SearchResultsActivity extends Activity {
+import android.app.ActionBar;
+import android.app.ListActivity;
+import android.app.SearchManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.ArrayAdapter;
+
+import com.example.classlocus.data.*;
+
+public class SearchResultsActivity extends ListActivity {
+
+	private TextView txtQuery;
+	BuildingsDataSource database;
 	
-	public void onCreate(Bundle savedInstanceState) {
-		// ...
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_search_results);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		txtQuery = (TextView) findViewById(R.id.txtQuery);
+		
+		database = new BuildingsDataSource(this);
+		//Building ex1 = database.createBuilding("Kelley Engineering", "KEC");
+		
 		handleIntent(getIntent());
 	}
 	
 	@Override
 	protected void onNewIntent(Intent intent) {
-		// ...
+		setIntent(intent);
 		handleIntent(intent);
 	}
 	
@@ -22,8 +46,30 @@ public class SearchResultsActivity extends Activity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			
-			// use the query to search your data somehow
+			/*
+			List<Building> allBuildings = database.getAllBuildings();
+			List<String> names = new ArrayList<String>();
+			
+			for (Building building : allBuildings) {
+				names.add(building.toString());
+			}
+			*/
+			
+			Object[] sArray = {"This", "is", 3.5, true, 2, "for", "bla"};
+			
+			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, sArray);
+			
+			txtQuery.setText("Results: " + query);
+			
+			/*
+			if (names.size() > 0) {
+				txtQuery.setText("Results: " + names.get(0));
+			} else {
+				txtQuery.setText("Results: names is empty");
+			}
+			*/
+			
+			setListAdapter(adp);
 		}
 	}
-
 }

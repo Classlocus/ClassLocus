@@ -2,7 +2,7 @@ package com.example.classlocus;
 
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
-
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -21,7 +21,6 @@ public class BuildingDetail extends Activity {
 		
 		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
 		tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
-		
 	}
 
 	/**
@@ -30,7 +29,10 @@ public class BuildingDetail extends Activity {
 	private void setupActionBar() {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
+		// Enable Up / Back navigation
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
