@@ -50,6 +50,16 @@ public class BuildingsDataSource {
 				BuildingDatabaseHelper.COLUMN_ID + " = " + id, null);
 	}
 	
+	public Building getBuilding(long buildingId) { 
+		Cursor cursor = database.query(BuildingDatabaseHelper.TABLE_BUILDINGS, allColumns, 
+			BuildingDatabaseHelper.COLUMN_ID + " = " + buildingId, null, null, null, null);
+		
+		Building foundBuilding = cursorToBuilding(cursor);
+		cursor.close();
+		
+		return foundBuilding; 
+	}
+	
 	public List<Building> getAllBuildings() {
 		List<Building> buildings = new ArrayList<Building>();
 		
