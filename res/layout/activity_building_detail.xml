@@ -25,11 +25,10 @@
         android:id="@+id/detail_building_value"
         android:text="@string/building_hint"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_toRightOf="@id/detail_building_name"
         android:layout_marginLeft="10dp"
-        android:width="75dp"
         android:height="30dp"
         android:gravity="center_vertical"
         android:padding="2dp" />
@@ -44,6 +43,15 @@
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
+	  <TextView
+	      android:id="@+id/detail_building_lang_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="wrap_content"
+	      android:layout_height="35dp"
+	      android:layout_toRightOf="@id/detail_building_lang"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+	  
 	  <TextView 
 	      android:id="@+id/detail_building_lat"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
@@ -51,6 +59,15 @@
 	      android:text="Lat"
 	      android:layout_height="35dp"
 	      android:layout_below="@id/detail_building_lang"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+	  
+	    <TextView 
+	      android:id="@+id/detail_building_lat_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="match_parent"
+	      android:layout_height="35dp"
+	      android:layout_toRightOf="@id/detail_building_lat"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
@@ -64,6 +81,15 @@
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
+	   <TextView 
+	      android:id="@+id/detail_building_accessible_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="match_parent"
+	      android:layout_height="35dp"
+	      android:layout_toRightOf="@id/detail_building_accessible"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+	  
 	  <TextView
 	      android:id="@+id/detail_building_distance"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
@@ -71,6 +97,15 @@
 	      android:text="Distance"
 	      android:layout_height="35dp"
 	      android:layout_below="@id/detail_building_accessible"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+	  
+	<TextView 
+	      android:id="@+id/detail_building_distance_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="match_parent"
+	      android:layout_height="35dp"
+	      android:layout_toRightOf="@id/detail_building_distance"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 </RelativeLayout>
