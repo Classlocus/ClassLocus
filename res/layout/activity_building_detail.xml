@@ -34,21 +34,21 @@
         android:padding="2dp" />
 	  
 	  <TextView
-	      android:id="@+id/detail_building_lang"
+	      android:id="@+id/detail_building_long"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
-	      android:text="Lang"
+	      android:text="@string/building_long_label"
 	      android:layout_height="35dp"
 	      android:layout_below="@id/detail_building_name"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
 	  <TextView
-	      android:id="@+id/detail_building_lang_value"
+	      android:id="@+id/detail_building_long_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
 	      android:layout_height="35dp"
-	      android:layout_toRightOf="@id/detail_building_lang"
+	      android:layout_toRightOf="@id/detail_building_long"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
@@ -56,9 +56,9 @@
 	      android:id="@+id/detail_building_lat"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
-	      android:text="Lat"
+	      android:text="@string/building_lat_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_lang"
+	      android:layout_below="@id/detail_building_long"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
@@ -75,7 +75,7 @@
 	      android:id="@+id/detail_building_accessible"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
-	      android:text="Accessible"
+	      android:text="@string/building_accessible_label"
 	      android:layout_height="35dp"
 	      android:layout_below="@id/detail_building_lat"
 	      android:gravity="center_vertical"
@@ -94,7 +94,7 @@
 	      android:id="@+id/detail_building_distance"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
-	      android:text="Distance"
+	      android:text="@string/building_distance_label"
 	      android:layout_height="35dp"
 	      android:layout_below="@id/detail_building_accessible"
 	      android:gravity="center_vertical"
