@@ -50,14 +50,18 @@ public class BuildingsDataSource {
 				BuildingDatabaseHelper.COLUMN_ID + " = " + id, null);
 	}
 	
+	// found Building object returned, otherwise returns null
 	public Building getBuilding(long buildingId) { 
 		Cursor cursor = database.query(BuildingDatabaseHelper.TABLE_BUILDINGS, allColumns, 
 			BuildingDatabaseHelper.COLUMN_ID + " = " + buildingId, null, null, null, null);
 		
-		Building foundBuilding = cursorToBuilding(cursor);
-		cursor.close();
-		
-		return foundBuilding; 
+		if (!cursor.isNull(0)) {
+			Building foundBuilding = cursorToBuilding(cursor);
+			cursor.close();
+			
+			return foundBuilding;
+		}
+		return null;
 	}
 	
 	public List<Building> getAllBuildings() {
