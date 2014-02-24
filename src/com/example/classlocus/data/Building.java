@@ -73,4 +73,28 @@ public class Building {
 	public String toString() {
 		return name;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Building b = (Building) obj;
+        
+        if (this.id == b.id && 
+        	this.name.equals(b.name) && 
+        	this.abbreviation.equals(b.abbreviation) &&
+        	this.latitude == b.latitude &&
+        	this.longitude == b.longitude &&
+        	this.buildingId == b.buildingId &&
+        	this.parentId == b.parentId &&
+        	this.accessible == b.accessible) {
+        	return true;
+        }
+        return false;
+    }
 }
