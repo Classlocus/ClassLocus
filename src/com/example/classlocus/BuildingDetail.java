@@ -5,6 +5,8 @@ import com.google.maps.android.SphericalUtil;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -19,8 +21,17 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
-		tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+		Intent passedIn = getIntent();
+		if (passedIn.hasExtra("buildingID")){
+			populate(getIntent());
+		}
+		//TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
+		//tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+		
+	}
+	
+	public void populate(Intent i){
+		
 	}
 
 	/**
