@@ -46,8 +46,9 @@
 	  <TextView
 	      android:id="@+id/detail_building_long_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
-	      android:layout_width="wrap_content"
+	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
+	      android:layout_below="@id/detail_building_name"
 	      android:layout_toRightOf="@id/detail_building_long"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
@@ -67,6 +68,7 @@
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
+	      android:layout_below="@id/detail_building_long"
 	      android:layout_toRightOf="@id/detail_building_lat"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
@@ -86,6 +88,7 @@
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
+	      android:layout_below="@id/detail_building_lat"
 	      android:layout_toRightOf="@id/detail_building_accessible"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
@@ -105,6 +108,7 @@
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
+	      android:layout_below="@id/detail_building_accessible"
 	      android:layout_toRightOf="@id/detail_building_distance"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
