@@ -93,7 +93,7 @@ public class MainActivity extends Activity {
 			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
-			helpIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
+			helpIntent = new Intent(MainActivity.this, Help.class);
 			startActivity(helpIntent);
 			return true;
 		} else if (itemId == R.id.settings) {
