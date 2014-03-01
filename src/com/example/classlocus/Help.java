@@ -2,10 +2,13 @@ package com.example.classlocus;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -61,14 +64,4 @@ public class Help extends Activity{
 		i.setData(Uri.parse(this.getResources().getString(R.string.our_website)));
 		startActivity(i);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+}	
