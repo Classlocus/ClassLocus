@@ -1,115 +1,138 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".BuildingDetail" >
-
-	 <TextView
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+ 
+    <!-- 2 columns -->
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+        
+        <TextView
 	     android:id="@+id/detail_building_name"
 	     android:layout_width="wrap_content"
 	     android:layout_height="35dp"
-	     android:layout_alignParentLeft="true"
-	     android:layout_alignParentTop="true"
 	     android:gravity="center_vertical"
 	     android:height="30dp"
 	     android:padding="2dp"
 	     android:text="@string/building_title"
 	     android:textAppearance="?android:attr/textAppearanceMedium"
 	     android:width="75dp" />
-	 
-	  <TextView
+ 
+  		<TextView
         android:id="@+id/detail_building_value"
         android:text="@string/building_hint"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_toRightOf="@id/detail_building_name"
         android:layout_marginLeft="10dp"
         android:height="30dp"
         android:gravity="center_vertical"
         android:padding="2dp" />
-	  
-	  <TextView
+    </TableRow>
+    
+     <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+  		
+          <TextView
 	      android:id="@+id/detail_building_long"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
 	      android:text="@string/building_long_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_name"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	  <TextView
+          
+           <TextView
 	      android:id="@+id/detail_building_long_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_name"
-	      android:layout_toRightOf="@id/detail_building_long"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	  <TextView 
+  		
+	</TableRow>
+	
+     <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+    
+     	<TextView 
 	      android:id="@+id/detail_building_lat"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
 	      android:text="@string/building_lat_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_long"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
 	  
-	    <TextView 
+         <TextView 
 	      android:id="@+id/detail_building_lat_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_long"
-	      android:layout_toRightOf="@id/detail_building_lat"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	  <TextView
+         
+     </TableRow>
+     
+     <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+         
+     	<TextView
 	      android:id="@+id/detail_building_accessible"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
 	      android:text="@string/building_accessible_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_lat"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	   <TextView 
+          
+		<TextView 
 	      android:id="@+id/detail_building_accessible_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_lat"
-	      android:layout_toRightOf="@id/detail_building_accessible"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	  <TextView
+          
+         
+         
+         
+    </TableRow>
+    
+     <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dip" >
+   
+          <TextView
 	      android:id="@+id/detail_building_distance"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
 	      android:text="@string/building_distance_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_accessible"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-	  
-	<TextView 
+          
+          <TextView 
 	      android:id="@+id/detail_building_distance_value"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="match_parent"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_accessible"
-	      android:layout_toRightOf="@id/detail_building_distance"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-</RelativeLayout>
+    </TableRow>
+ 
+</TableLayout>
