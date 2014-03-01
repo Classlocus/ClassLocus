@@ -1,5 +1,7 @@
 package com.example.classlocus;
 
+import com.example.classlocus.data.Building;
+import com.example.classlocus.data.*;
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
 import android.app.ActionBar;
@@ -14,6 +16,8 @@ import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
 
+	private static final boolean True = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -21,17 +25,51 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		BuildingsDataSource db = new BuildingsDataSource(this); 
+		
 		Intent passedIn = getIntent();
-		if (passedIn.hasExtra("buildingID")){
-			populate(getIntent());
-		}
-		//TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
+		//if (passedIn.hasExtra("buildingID")){
+			double latLang[]; 
+			Building bd; 
+			TextView tv;
+			bd = new Building();
+			bd.setName("william");
+			bd.setAccessible(True);
+			bd.setLatLng(23.45, 23.23);
+			//bd = populate(getIntent(), db);
+			tv = (TextView) findViewById(R.id.detail_building_value);
+			tv.setText(bd.getName());
+			tv = (TextView) findViewById(R.id.detail_building_accessible_value);
+			if (bd.getAccessible() == true) {
+				tv.setText("Yes");
+			} else {
+				tv.setText("No");
+			}
+			latLang = bd.getLatLng();
+			tv = (TextView) findViewById(R.id.detail_building_long_value);
+			tv.setText(String.valueOf(latLang[0]));
+			tv = (TextView) findViewById(R.id.detail_building_lat_value);
+			tv.setText(String.valueOf(latLang[1]));
+			//tv.findViewById(R.id.detail_building_distance_value);
+			//tv.setText(buildingDistance(bd.getLatLng(), );
+			
+			
+		//}
+		//TextView tv = (TextView) findViewById(R.id.detail_building_value);
+		//tv.setText(text)
 		//tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
 		
 	}
 	
-	public void populate(Intent i){
+	public Building populate(Intent i, BuildingsDataSource helper){
 		
+		Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
+		
+		if (tmp == null) {
+			this.finish();
+		}
+			
+		return tmp;
 	}
 
 	/**
