@@ -11,30 +11,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 
-public class Help extends Activity{
-	
+public class Help extends Activity {
+
+	TextView t;
+	static String googleDisclaimer;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_help_menu);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		
-		
+
+		t = new TextView(this);
+		googleDisclaimer = GooglePlayServicesUtil
+				.getOpenSourceSoftwareLicenseInfo(this);
+
+		t = (TextView) findViewById(R.id.googleDisclaimer);
+		t.setText(googleDisclaimer);
+
 	}
 
 	private void setupActionBar() {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		// Enable Up / Back navigation
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -58,10 +67,11 @@ public class Help extends Activity{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void goToWiki(View view){
+
+	public void goToWiki(View view) {
 		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setData(Uri.parse(this.getResources().getString(R.string.our_website)));
+		i.setData(Uri
+				.parse(this.getResources().getString(R.string.our_website)));
 		startActivity(i);
 	}
-}	
+}
