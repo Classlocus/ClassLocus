@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -11,7 +12,43 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
-        android:text="Android Disclaimer"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="@string/google_disclaimer_text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="12sp" />
+
+    <ListView
+        android:id="@+id/projectMembersList"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="21dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:entries="@array/project_members"
+        android:textSize="12sp"
+        tools:listitem="@android:layout/simple_list_item_1" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/googleDisclaimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:onClick="goToWiki"
+        android:text="@string/wiki_link_text" />
+
+    <TextView
+        android:id="@+id/projectDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/projectMembersList"
+        android:layout_centerHorizontal="true"
+        android:text="An app to help you find classes!"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="12sp" />
 
 </RelativeLayout>

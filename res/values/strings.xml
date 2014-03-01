@@ -18,5 +18,16 @@
     <string name="title_map_pane">MapPane</string>
     <string name="activity_building_found">Building Found</string>
     <string name="our_website">https://secure.engr.oregonstate.edu/classes/eecs/winter2014/cs361-001/index.php/Site/Coussenpdevyldem</string>
+    <string name="wiki_link_text">Go to Wiki</string>
+    <string name="google_disclaimer_text">Google Disclaimer</string>
+
+    <string-array name="project_members">
+        <item>Thomas Albertine</item>
+        <item>Paul Coussens</item>
+        <item>Brandon Johnson</item>
+        <item>Jen Kirkland</item>
+        <item>Anthony Miller</item>
+        <item>Nicholas Nelson</item>
+    </string-array>
 
 </resources>

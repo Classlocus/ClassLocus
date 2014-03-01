@@ -9,6 +9,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -32,7 +33,6 @@ public class Help extends Activity {
 
 		t = (TextView) findViewById(R.id.googleDisclaimer);
 		t.setText(googleDisclaimer);
-
 	}
 
 	private void setupActionBar() {
