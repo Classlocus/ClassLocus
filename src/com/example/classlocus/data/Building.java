@@ -6,7 +6,6 @@ public class Building {
 	private String abbreviation;
 	private double latitude;
 	private double longitude;
-	private long buildingId;
 	private long parentId;
 	private boolean accessible;
 	
@@ -44,14 +43,6 @@ public class Building {
 		this.longitude = longitude;
 	}
 	
-	public long getBuildingId() {
-		return buildingId;
-	}
-	
-	public void setBuildingId(long buildingId) {
-		this.buildingId = buildingId;
-	}
-	
 	public long getParentId() {
 		return parentId;
 	}
@@ -86,11 +77,10 @@ public class Building {
         Building b = (Building) obj;
         
         if (this.id == b.id && 
-        	this.name.equals(b.name) && 
-        	this.abbreviation.equals(b.abbreviation) &&
+        	(this.name.compareTo(b.name) == 0) && 
+        	(this.abbreviation.compareTo(b.abbreviation) == 0) &&
         	this.latitude == b.latitude &&
         	this.longitude == b.longitude &&
-        	this.buildingId == b.buildingId &&
         	this.parentId == b.parentId &&
         	this.accessible == b.accessible) {
         	return true;
