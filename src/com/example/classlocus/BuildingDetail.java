@@ -1,6 +1,8 @@
 package com.example.classlocus;
 
 import com.example.classlocus.data.*;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.*;
@@ -25,6 +27,7 @@ public class BuildingDetail extends Activity {
 	
 	LocationManager mgr;
 	Building bd;
+	GoogleMap map;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
 		BuildingsDataSource db = new BuildingsDataSource(this); 
 		
@@ -58,20 +61,20 @@ public class BuildingDetail extends Activity {
 				tv.setText("No");
 			}
 			latLang = bd.getLatLng();
-			tv = (TextView) findViewById(R.id.detail_building_long_value);
-			tv.setText(String.valueOf(latLang[0]));
-			tv = (TextView) findViewById(R.id.detail_building_lat_value);
-			tv.setText(String.valueOf(latLang[1]));
 			//tv.findViewById(R.id.detail_building_distance_value);
 			//tv.setText(buildingDistance(bd.getLatLng(), );
+			
 			map.addMarker(new MarkerOptions()
 	 		.title(bd.getName())
 	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
 			
+			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
+			
 			Location location = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 			tv = (TextView) findViewById(R.id.detail_building_distance_value);
 			Log.i("location", "Setting default latitude to " + String.valueOf(location.getLatitude()) + ", " + String.valueOf(location.getLongitude()));
-			tv.setText(buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(), location.getLongitude())));
+			double d = buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(), location.getLongitude()));
+			tv.setText(formatDistance(d, calculateTime(d)));
 		//}
 
 		
@@ -124,11 +127,9 @@ public class BuildingDetail extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public String buildingDistance(LatLng coord1, LatLng coord2){
+	public double buildingDistance(LatLng coord1, LatLng coord2){
 		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
-		String dString = String.valueOf(distance);
-		dString = dString + "m";
-		return dString;
+		return distance;
 	}
 	
 	@Override
@@ -142,13 +143,35 @@ public class BuildingDetail extends Activity {
 		mgr.removeUpdates(onLocationChange);
 	}
 	
+	public void updateMapPosition(LatLng position) {
+		
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+		map.animateCamera(CameraUpdateFactory.zoomIn());
+		map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+	}
+	
+	public int calculateTime(double distance) {
+		
+		double walkingspeed = 1.78816;
+		int result = (int) (distance / walkingspeed);
+		return result;
+	}
+	
+	public String formatDistance(double distance, int time){
+		String distanceStr = String.valueOf(distance);
+		distanceStr = distanceStr.substring(0, distanceStr.indexOf('.'));
+		String result = distanceStr + "m (" + String.valueOf(time / 60) + "min, " + String.valueOf(time % 60) + "sec)";
+		return result;
+	}
+	
 	LocationListener onLocationChange = new LocationListener(){
 
 		@Override
 		public void onLocationChanged(Location location) {
 			Log.i("classLocus", "Updating location");
 			TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
-			tv.setText(buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude())));
+			double distance = buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude()));
+			tv.setText(formatDistance(distance, calculateTime(distance)));
 		}
 
 		@Override
