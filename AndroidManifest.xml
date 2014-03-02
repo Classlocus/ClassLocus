@@ -62,13 +62,6 @@
                 android:resource="@xml/searchable" />
         </activity>
         
-        <!-- location found activity -->
-        <activity
-            android:name="com.example.classlocus.BuildingFound"
-            android:label="@string/activity_building_found"
-            android:parentActivityName="com.example.classlocus.MainActivity" >
-        </activity>
-        
         <activity
             android:name="com.example.classlocus.test.TestDatabaseActivity"
             android:label="TestDatabaseActivity"

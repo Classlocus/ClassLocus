@@ -6,95 +6,199 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.text.TextUtils;
 
 public class BuildingsDataSource {
 
-	// Database fields
 	private SQLiteDatabase database;
-	private BuildingDatabaseHelper dbHelper;
-	private String[] allColumns = { BuildingDatabaseHelper.COLUMN_ID, 
-									BuildingDatabaseHelper.COLUMN_NAME,
-									BuildingDatabaseHelper.COLUMN_ABBREVIATION,
-									BuildingDatabaseHelper.COLUMN_LATITUDE,
-									BuildingDatabaseHelper.COLUMN_LONGITUDE,
-									BuildingDatabaseHelper.COLUMN_PARENT,
-									BuildingDatabaseHelper.COLUMN_ACCESSIBLE };
+	private DatabaseHelper dbHelper;
+	private String[] allColumns = { DatabaseHelper.COLUMN_ID, 
+									DatabaseHelper.COLUMN_NAME,
+									DatabaseHelper.COLUMN_ABBR,
+									DatabaseHelper.COLUMN_LAT,
+									DatabaseHelper.COLUMN_LONG,
+									DatabaseHelper.COLUMN_PARENT,
+									DatabaseHelper.COLUMN_ACCESS };
 	
 	public BuildingsDataSource(Context context) {
-		dbHelper = new BuildingDatabaseHelper(context);
+		dbHelper = DatabaseHelper.getInstance(context);
 	}
 	
-	public void open() throws SQLException {
-		database = dbHelper.getWritableDatabase();
-	}
-	
-	public void close() {
-		dbHelper.close();
-	}
-	
-	public Building createBuilding(String name, String abbreviation) {
-		this.open();
+	public boolean insertBuilding(Building building) {
 		ContentValues values = new ContentValues();
-		values.put(BuildingDatabaseHelper.COLUMN_NAME, name);
-		values.put(BuildingDatabaseHelper.COLUMN_ABBREVIATION, abbreviation);
+		values.put(DatabaseHelper.COLUMN_ID, building.getId());
+		values.put(DatabaseHelper.COLUMN_NAME, building.getName());
+		values.put(DatabaseHelper.COLUMN_ABBR, building.getAbbreviation());
+		values.put(DatabaseHelper.COLUMN_LAT, building.getLatLng()[0]);
+		values.put(DatabaseHelper.COLUMN_LONG, building.getLatLng()[1]);
+		values.put(DatabaseHelper.COLUMN_PARENT, building.getParentId());
+		values.put(DatabaseHelper.COLUMN_ACCESS, building.getAccessible());
 		
-		long insertId = database.insert(BuildingDatabaseHelper.TABLE_BUILDINGS, null, values);
-		Cursor cursor = database.query(BuildingDatabaseHelper.TABLE_BUILDINGS, allColumns, 
-				BuildingDatabaseHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
+		int rowsAffected = 0;
+		String[] id = new String[1];
+		String where = "";
 		
-		cursor.moveToFirst();
-		Building newBuilding = cursorToBuilding(cursor);
-		
-		cursor.close();
-		this.close();
-		return newBuilding;
-	}
-	
-	public void deleteBuilding(Building building) {
-		this.open();
-		long id = building.getId();
-		System.out.println("Building deleted with id: " + id);
-		database.delete(BuildingDatabaseHelper.TABLE_BUILDINGS, 
-				BuildingDatabaseHelper.COLUMN_ID + " = " + id, null);
-		this.close();
-	}
-	
-	// found Building object returned, otherwise returns null
-	public Building getBuilding(long buildingId) { 
-		this.open();
-		Cursor cursor = database.query(BuildingDatabaseHelper.TABLE_BUILDINGS, allColumns, 
-			BuildingDatabaseHelper.COLUMN_ID + " = " + buildingId, null, null, null, null);
-		
-		if (cursor.getCount() > 0) {
-			Building foundBuilding = cursorToBuilding(cursor);
-			cursor.close();
-			this.close();
-			return foundBuilding;
+		try {
+			database = dbHelper.getWritableDatabase();
+			
+			if (database.isOpen()) {
+				database.beginTransaction();
+				
+				id[0] = String.valueOf(building.getId());
+				where = DatabaseHelper.COLUMN_ID + "= ?";
+				rowsAffected = database.update(DatabaseHelper.TABLE_BUILDINGS, values, where, id);
+				
+				// insert if update resulted in 0 rows affected (0 means it is a new entry)
+				if (rowsAffected == 0) {
+					database.insert(DatabaseHelper.TABLE_BUILDINGS, "", values);
+				}
+				database.setTransactionSuccessful();
+				database.endTransaction();
+			}
+			return true;
 		}
-		this.close();
-		return null;
+		catch (Exception e) {
+			Log.e(DatabaseHelper.DATABASE_NAME, e.getMessage());
+			return false;
+		}
+		finally {
+			dbHelper.close();
+		}
 	}
 	
+	public boolean removeBuilding(long id) {
+		try {
+			database = dbHelper.getWritableDatabase();
+			database.delete(DatabaseHelper.TABLE_BUILDINGS, 
+					DatabaseHelper.COLUMN_ID + " = " + id, null);
+			
+			if (getBuilding(id) == null) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		catch (Exception e) {
+			Log.e(DatabaseHelper.DATABASE_NAME, e.getMessage());
+			return false;
+		}
+		finally {
+			dbHelper.close();
+		}
+	}
+	
+	// returns Building object on query, returns null if not found
+	public Building getBuilding(long id) {
+		Cursor cursor;
+		
+		try {
+			database = dbHelper.getReadableDatabase();
+			cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, allColumns, 
+					DatabaseHelper.COLUMN_ID + " = " + id, null, null, null, null);
+			
+			if (cursor.getCount() > 0) {
+				cursor.moveToFirst();
+				Building foundBuilding = cursorToBuilding(cursor);
+				cursor.close();
+				return foundBuilding;
+			} else {
+				cursor.close();
+				return null;
+			}
+		}
+		catch (Exception e) {
+			Log.e(DatabaseHelper.DATABASE_NAME, e.getMessage());
+			return null;
+		}
+		finally {
+			dbHelper.close();
+		}
+	}
+	
+	// returns List<Building> object on query, returns empty list if empty database
 	public List<Building> getAllBuildings() {
-		this.open();
 		List<Building> buildings = new ArrayList<Building>();
+		Cursor cursor;
 		
-		Cursor cursor = database.query(BuildingDatabaseHelper.TABLE_BUILDINGS, 
-				allColumns, null, null, null, null, null);
+		try {
+			database = dbHelper.getReadableDatabase();
+			cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, 
+					allColumns, null, null, null, null, null);
+			
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				Building building = cursorToBuilding(cursor);
+				buildings.add(building);
+				cursor.moveToNext();
+			}
+			cursor.close();
+			return buildings;
+		}
+		catch (Exception e) {
+			Log.e(DatabaseHelper.DATABASE_NAME, e.getMessage());
+			return null;
+		}
+		finally {
+			dbHelper.close();
+		}
+	}
+	
+	public int selectAll() {
+		final String selection = DatabaseHelper.TABLE_BUILDINGS + " MATCH ?";
+		database = dbHelper.getReadableDatabase();
+		Cursor cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, allColumns, selection, null, null, null, null);
 		
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Building building = cursorToBuilding(cursor);
-			buildings.add(building);
-			cursor.moveToNext();
+		return cursor.getCount();
+	}
+	
+	// returns List<Building> object on query, returns empty list if no matches exist
+	public List<Building> getMatchedBuildings(String query) {
+		List<Building> buildings = new ArrayList<Building>();
+		Cursor cursor = null;
+		
+		try {
+			database = dbHelper.getReadableDatabase();
+			
+			if (!TextUtils.isEmpty(query)) {
+				final String selection = DatabaseHelper.TABLE_BUILDINGS + " MATCH ?";
+				final String[] selectionArgs = { appendWildcard(query) + " " + DatabaseHelper.COLUMN_NAME + ": " + query.toString() };
+				
+				cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, allColumns, selection, selectionArgs, null, null, null);
+			}
+			
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				Building building = cursorToBuilding(cursor);
+				buildings.add(building);
+				cursor.moveToNext();
+			}
+			cursor.close();
+			return buildings;
+		}
+		catch (Exception e) {
+			Log.e(DatabaseHelper.TABLE_BUILDINGS, e.getMessage());
+			return null;
+		}
+		finally {
+			dbHelper.close();
+		}
+	}
+	
+	private String appendWildcard(String query) {
+		if(TextUtils.isEmpty(query)) {
+			return query;
 		}
 		
-		// make sure to close the cursor
-		cursor.close();
-		this.close();
-		return buildings;
+		final StringBuilder builder = new StringBuilder();
+		final String[] splits = TextUtils.split(query, " ");
+		
+		for (String split : splits) {
+			builder.append(split).append("*").append(" ");
+		}
+		
+		return builder.toString().trim();
 	}
 	
 	private Building cursorToBuilding(Cursor cursor) {
@@ -102,6 +206,11 @@ public class BuildingsDataSource {
 		building.setId(cursor.getLong(0));
 		building.setName(cursor.getString(1));
 		building.setAbbreviation(cursor.getString(2));
+		building.setLatLng(cursor.getDouble(3), cursor.getDouble(4));
+		building.setParentId(cursor.getLong(5));
+		boolean value = (cursor.getString(6)).equals("1");
+		building.setAccessible(value);
+		
 		return building;
 	}
 }

@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private Intent buildingIntent;
 	private Intent settingsIntent;
+	private Intent helpIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +93,12 @@ public class MainActivity extends Activity {
 			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
-			//helpscreen();
+			helpIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
+			startActivity(helpIntent);
 			return true;
 		} else if (itemId == R.id.settings) {
-			settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
-			startActivity(settingsIntent);
+			//settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
+			//startActivity(settingsIntent);
 			return true;
 		} else {
 			return super.onOptionsItemSelected(item);
