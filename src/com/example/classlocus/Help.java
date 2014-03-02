@@ -2,6 +2,7 @@ package com.example.classlocus;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,30 +10,24 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.model.LatLng;
 
 public class Help extends Activity {
 
-	TextView t;
-	static String googleDisclaimer;
-
+	static String googleDisclaimerDialog;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_help_menu);
 		// Show the Up button in the action bar.
 		setupActionBar();
-
-		t = new TextView(this);
-		googleDisclaimer = GooglePlayServicesUtil
-				.getOpenSourceSoftwareLicenseInfo(this);
-
-		t = (TextView) findViewById(R.id.googleDisclaimer);
-		t.setText(googleDisclaimer);
+	
 	}
 
 	private void setupActionBar() {
@@ -74,4 +69,5 @@ public class Help extends Activity {
 				.parse(this.getResources().getString(R.string.our_website)));
 		startActivity(i);
 	}
+
 }
