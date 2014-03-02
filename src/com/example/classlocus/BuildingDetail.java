@@ -1,7 +1,8 @@
 package com.example.classlocus;
 
-import com.example.classlocus.data.Building;
 import com.example.classlocus.data.*;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
 import android.app.ActionBar;
@@ -24,6 +25,8 @@ public class BuildingDetail extends Activity {
 		setContentView(R.layout.activity_building_detail);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
+		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
 		BuildingsDataSource db = new BuildingsDataSource(this); 
 		
@@ -52,7 +55,9 @@ public class BuildingDetail extends Activity {
 			tv.setText(String.valueOf(latLang[1]));
 			//tv.findViewById(R.id.detail_building_distance_value);
 			//tv.setText(buildingDistance(bd.getLatLng(), );
-			
+			map.addMarker(new MarkerOptions()
+	 		.title(bd.getName())
+	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
 			
 		//}
 		//TextView tv = (TextView) findViewById(R.id.detail_building_value);
