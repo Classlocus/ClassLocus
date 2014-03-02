@@ -76,8 +76,7 @@ public class Building {
 
         Building b = (Building) obj;
         
-        if (this.id == b.id && 
-        	(this.name.compareTo(b.name) == 0) && 
+        if ((this.name.compareTo(b.name) == 0) && 
         	(this.abbreviation.compareTo(b.abbreviation) == 0) &&
         	this.latitude == b.latitude &&
         	this.longitude == b.longitude &&

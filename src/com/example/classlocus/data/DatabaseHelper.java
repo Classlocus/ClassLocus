@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// SCRUD-compliant method; create and update
 	public long insert(long id, String name, String abbreviation, double[] latLng, long parentId, boolean accessible) {
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_ID, id);
+		values.put(COLUMN_ID, 0);
 		values.put(COLUMN_NAME, name);
 		values.put(COLUMN_ABBR, abbreviation);
 		values.put(COLUMN_LAT, latLng[0]);
@@ -122,10 +122,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			
 			cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, columns, selection, selectionArgs, null, null, null);
 		}
-		
-		System.out.println("-------------------------------------");
-		DatabaseUtils.dumpCursor(cursor);
-		System.out.println("-------------------------------------");
 		
 		return cursor;
 	}
