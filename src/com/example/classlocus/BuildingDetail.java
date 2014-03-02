@@ -1,10 +1,12 @@
 package com.example.classlocus;
 
-import com.example.classlocus.data.Building;
 import com.example.classlocus.data.*;
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
 import android.app.ActionBar;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +18,11 @@ import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
 
+	//This represents our philosophy of software engineering
 	private static final boolean True = false;
+	
+	LocationManager mgr;
+	Building bd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +33,17 @@ public class BuildingDetail extends Activity {
 		
 		BuildingsDataSource db = new BuildingsDataSource(this); 
 		
+		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
+		
 		Intent passedIn = getIntent();
 		//if (passedIn.hasExtra("buildingID")){
 			double latLang[]; 
-			Building bd; 
 			TextView tv;
 			bd = new Building();
 			bd.setName("william");
-			bd.setAccessible(True);
-			bd.setLatLng(23.45, 23.23);
+			bd.setAccessible(true);
+			//44.559701, -123.281609 Reser stadium
+			bd.setLatLng(44.559701, -123.281609);
 			//bd = populate(getIntent(), db);
 			tv = (TextView) findViewById(R.id.detail_building_value);
 			tv.setText(bd.getName());
@@ -50,14 +58,13 @@ public class BuildingDetail extends Activity {
 			tv.setText(String.valueOf(latLang[0]));
 			tv = (TextView) findViewById(R.id.detail_building_lat_value);
 			tv.setText(String.valueOf(latLang[1]));
-			//tv.findViewById(R.id.detail_building_distance_value);
-			//tv.setText(buildingDistance(bd.getLatLng(), );
 			
-			
+			Location location = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			tv = (TextView) findViewById(R.id.detail_building_distance_value);
+			Log.i("location", "Setting default latitude to " + String.valueOf(location.getLatitude()) + ", " + String.valueOf(location.getLongitude()));
+			tv.setText(buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(), location.getLongitude())));
 		//}
-		//TextView tv = (TextView) findViewById(R.id.detail_building_value);
-		//tv.setText(text)
-		//tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+
 		
 	}
 	
@@ -114,4 +121,41 @@ public class BuildingDetail extends Activity {
 		dString = dString + "m";
 		return dString;
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
+	}
+	
+	public void onPause(){
+		super.onPause();
+		mgr.removeUpdates(onLocationChange);
+	}
+	
+	LocationListener onLocationChange = new LocationListener(){
+
+		@Override
+		public void onLocationChanged(Location location) {
+			Log.i("classLocus", "Updating location");
+			TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
+			tv.setText(buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude())));
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			//Move along!
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			//Nobody here but us trees!
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// Ignore!
+		}
+		
+	};
 }
