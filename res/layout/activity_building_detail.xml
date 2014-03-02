@@ -1,4 +1,6 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tableLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
@@ -134,5 +136,28 @@
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
     </TableRow>
+    
+     <TableRow
+         android:id="@+id/tableRow6"
+         android:layout_height="wrap_content"
+         android:layout_weight="1" >
+         
+       	<fragment android:id="@+id/details_map"
+        class="com.google.android.gms.maps.MapFragment" 
+		android:layout_weight="1"
+		android:layout_height="fill_parent"
+ 		tools:ignore="MissingPrefix"
+		map:cameraBearing="0"
+		map:cameraTargetLat="@+id/detail_building_lat_value"
+		map:cameraTargetLng="@+id/detail_building_long_value"
+		map:cameraZoom="15"
+		map:mapType="normal"
+		map:uiCompass="true"
+		map:uiRotateGestures="true"
+		map:uiScrollGestures="true"
+		map:uiTiltGestures="true"
+		map:uiZoomControls="false"
+		map:uiZoomGestures="true" />
+     </TableRow>
  
 </TableLayout>
