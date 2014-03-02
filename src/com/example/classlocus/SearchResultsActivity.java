@@ -31,7 +31,16 @@ public class SearchResultsActivity extends ListActivity {
 		txtQuery = (TextView) findViewById(R.id.txtQuery);
 		
 		database = new BuildingsDataSource(this);
-		//Building ex1 = database.createBuilding("Kelley Engineering", "KEC");
+		
+		Building ex = new Building();
+		ex.setId(34);
+		ex.setName("Kelley Engineering Center");
+		ex.setAbbreviation("KEC");
+		ex.setLatLng(44.5679076, -123.2783046);
+		ex.setParentId(10);
+		ex.setAccessible(true);
+		
+		database.insertBuilding(ex);
 		
 		handleIntent(getIntent());
 	}
