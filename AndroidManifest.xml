@@ -35,7 +35,7 @@
     		android:value="AIzaSyAAnIihmicnlLd-5XZ06Cfxyi25HSsoC2s"/>
         
         <provider android:name="com.example.classlocus.search.SearchSuggestionProvider"
-              android:authorities="com.example.SearchSuggestionProvider" />
+              android:authorities="com.example.classlocus.search.SearchSuggestionProvider" />
         
         <!-- default activity -->
         <activity
@@ -75,6 +75,15 @@
             android:name="com.example.classlocus.BuildingDetail"
             android:label="@string/title_activity_building_detail"
             android:parentActivityName="com.example.classlocus.MainActivity" >
+        	<meta-data
+        	    android:name="android.support.PARENT_ACTIVITY"
+        	    android:value="com.example.classlocus.MainActivity" />
+        </activity>
+        
+        <activity
+        	android:name="com.example.classlocus.Help"
+        	android:label="@string/title_help"
+        	android:parentActivityName="com.example.classlocus.MainActivity">
         	<meta-data
         	    android:name="android.support.PARENT_ACTIVITY"
         	    android:value="com.example.classlocus.MainActivity" />

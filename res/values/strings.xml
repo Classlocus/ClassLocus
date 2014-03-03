@@ -3,30 +3,38 @@
 
     <string name="app_name">ClassLocus</string>
     <string name="title_activity_main">MainActivity</string>
-    
     <string name="building_title">Building</string>
     <string name="building_hint">building name</string>
-    
     <string name="room_title">Room</string>
     <string name="room_hint">room number/name</string>
-    
     <string name="search_title">Search</string>
     <string name="search_hint">Search building/room</string>
-    
     <string name="action_clear_history">Clear Search History</string>
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
-    
     <string name="alert_dialog_confirm">Confirm</string>
     <string name="alert_dialog_cancel">Cancel</string>
-    
     <string name="title_activity_building_detail">Building Detail</string>
     <string name="title_map_pane">MapPane</string>
-    
     <string name="activity_building_found">Building Found</string>
     <string name="building_lat_label">Lat</string>
     <string name="building_long_label">Long</string>
     <string name="building_accessible_label">Accessible</string>
     <string name="building_distance_label">Distance</string>
+    <string name="our_website">https://secure.engr.oregonstate.edu/classes/eecs/winter2014/cs361-001/index.php/Site/Coussenpdevyldem</string>
+    <string name="wiki_link_text">Go to Wiki</string>
+    <string name="google_disclaimer_text">Google Disclaimer</string>
+	<string name="description">ClassLocus is an app that is designed to help locate your classes</string>
+	<string name="title_help">Help</string>
+	<string name="menu_legalnotices">Legal Notices</string>
+   
+    <string-array name="project_members">
+        <item>Thomas Albertine</item>
+        <item>Paul Coussens</item>
+        <item>Brandon Johnson</item>
+        <item>Jen Kirkland</item>
+        <item>Anthony Miller</item>
+        <item>Nicholas Nelson</item>
+    </string-array>
 
 </resources>

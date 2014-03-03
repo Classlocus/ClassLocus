@@ -1,6 +1,7 @@
 package com.example.classlocus;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.Context;
@@ -92,14 +93,25 @@ public class MainActivity extends Activity {
 			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
+			helpIntent = new Intent(MainActivity.this, Help.class);
+			startActivity(helpIntent);
 			return true;
 		} else if (itemId == R.id.settings) {
 			//settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
 			//startActivity(settingsIntent);
 			return true;
-		} else {
+		} else if (itemId == R.id.legalnotices) {
+			String LicenseInfo = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(
+			        getApplicationContext());
+			AlertDialog.Builder LicenseDialog = new AlertDialog.Builder(MainActivity.this);
+			LicenseDialog.setTitle("Legal Notices");
+			LicenseDialog.setMessage(LicenseInfo);
+			LicenseDialog.show();
+		}
+		else {
 			return super.onOptionsItemSelected(item);
 		}
+		return false;
 	}
 	
 	private boolean checkPlayServices() {
