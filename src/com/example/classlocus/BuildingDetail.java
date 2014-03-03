@@ -38,8 +38,6 @@ public class BuildingDetail extends Activity {
 		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
-		BuildingsDataSource db = new BuildingsDataSource(this); 
-		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
 		
 		double latLang[]; 
@@ -79,12 +77,12 @@ public class BuildingDetail extends Activity {
 		
 	}
 	
-	public Building populate(Intent i, BuildingsDataSource helper){
+	//public Building populate(Intent i, BuildingsDataSource helper){
 		
-		Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
+	//	Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
 			
-		return tmp;
-	}
+	//	return tmp;
+	//}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
