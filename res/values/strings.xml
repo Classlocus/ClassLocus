@@ -24,5 +24,9 @@
     <string name="title_map_pane">MapPane</string>
     
     <string name="activity_building_found">Building Found</string>
+    <string name="building_lat_label">Lat</string>
+    <string name="building_long_label">Long</string>
+    <string name="building_accessible_label">Accessible</string>
+    <string name="building_distance_label">Distance</string>
 
 </resources>

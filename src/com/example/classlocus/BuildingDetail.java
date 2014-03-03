@@ -1,16 +1,33 @@
 package com.example.classlocus;
 
+import com.example.classlocus.data.*;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
 import android.app.ActionBar;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
+
+	//This represents our philosophy of software engineering
+	private static final boolean True = false;
+	
+	LocationManager mgr;
+	Building bd;
+	GoogleMap map;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +36,54 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
-		TextView tv = (TextView) findViewById(R.id.detail_building_distance);
-		tv.setText(buildingDistance(new LatLng(2d, 2d), new LatLng(2d, 2d)));
+		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
+		
+		BuildingsDataSource db = new BuildingsDataSource(this); 
+		
+		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
+		
+		double latLang[]; 
+		TextView tv;
+		
+		//Take this part out when building id queries are finished
+		bd = new Building();
+		bd.setName("Reser Stadium");
+		bd.setAccessible(true);
+		//44.559701, -123.281609 Reser stadium
+		bd.setLatLng(44.559701, -123.281609);
+		//End that part
+		//Replace with:
+		//bd = populate(getIntent(), db);
+		
+		//populating fields
+		if (bd != null){
+			tv = (TextView) findViewById(R.id.detail_building_value);
+			tv.setText(bd.getName());
+			tv = (TextView) findViewById(R.id.detail_building_accessible_value);
+			if (bd.getAccessible() == true) {
+				tv.setText("Yes");
+			} else {
+				tv.setText("No");
+			}
+			latLang = bd.getLatLng();
+			tv = (TextView) findViewById(R.id.detail_building_distance_value);
+			tv.setText("Connecting to Satellites...");
+			
+			//Set map
+			map.addMarker(new MarkerOptions()
+	 		.title(bd.getName())
+	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
+			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
+		}
+
+		
+	}
+	
+	public Building populate(Intent i, BuildingsDataSource helper){
+		
+		Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
+			
+		return tmp;
 	}
 
 	/**
@@ -59,10 +122,67 @@ public class BuildingDetail extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public String buildingDistance(LatLng coord1, LatLng coord2){
+	public double buildingDistance(LatLng coord1, LatLng coord2){
 		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
-		String dString = String.valueOf(distance);
-		dString = dString + "m";
-		return dString;
+		return distance;
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
+	}
+	
+	public void onPause(){
+		super.onPause();
+		mgr.removeUpdates(onLocationChange);
+	}
+	
+	public void updateMapPosition(LatLng position) {
+		
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
+		map.animateCamera(CameraUpdateFactory.zoomIn());
+		map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+	}
+	
+	public int calculateTime(double distance) {
+		
+		double walkingspeed = 1.78816;
+		int result = (int) (distance / walkingspeed);
+		return result;
+	}
+	
+	public String formatDistance(double distance, int time){
+		String distanceStr = String.valueOf(distance);
+		distanceStr = distanceStr.substring(0, distanceStr.indexOf('.'));
+		String result = distanceStr + "m (" + String.valueOf(time / 60) + "min, " + String.valueOf(time % 60) + "sec)";
+		return result;
+	}
+	
+	LocationListener onLocationChange = new LocationListener(){
+
+		@Override
+		public void onLocationChanged(Location location) {
+			Log.i("classLocus", "Updating location");
+			TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
+			double distance = buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude()));
+			tv.setText(formatDistance(distance, calculateTime(distance)));
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			//Move along!
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			//Nobody here but us trees!
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// Ignore!
+		}
+		
+	};
 }

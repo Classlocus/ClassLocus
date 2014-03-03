@@ -1,46 +1,111 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".BuildingDetail" >
-
-	 <TextView
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+ 
+    <!-- 2 columns -->
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dip" >
+        
+        <TextView
 	     android:id="@+id/detail_building_name"
 	     android:layout_width="wrap_content"
 	     android:layout_height="35dp"
-	     android:layout_alignParentLeft="true"
-	     android:layout_alignParentTop="true"
 	     android:gravity="center_vertical"
 	     android:height="30dp"
 	     android:padding="2dp"
 	     android:text="@string/building_title"
 	     android:textAppearance="?android:attr/textAppearanceMedium"
 	     android:width="75dp" />
-	 
-	  <TextView
+ 
+  		<TextView
         android:id="@+id/detail_building_value"
         android:text="@string/building_hint"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:layout_toRightOf="@id/detail_building_name"
         android:layout_marginLeft="10dp"
-        android:width="75dp"
         android:height="30dp"
         android:gravity="center_vertical"
         android:padding="2dp" />
-	  
-	  <TextView
+    </TableRow>
+     
+     <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dip" >
+         
+     	<TextView
+	      android:id="@+id/detail_building_accessible"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="wrap_content"
+	      android:text="@string/building_accessible_label"
+	      android:layout_height="35dp"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+          
+		<TextView 
+	      android:id="@+id/detail_building_accessible_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="match_parent"
+	      android:layout_height="35dp"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+        
+    </TableRow>
+    
+     <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="2dip" >
+   
+          <TextView
 	      android:id="@+id/detail_building_distance"
 	      android:textAppearance="?android:attr/textAppearanceMedium"
 	      android:layout_width="wrap_content"
-	      android:text="Default"
+	      android:text="@string/building_distance_label"
 	      android:layout_height="35dp"
-	      android:layout_below="@id/detail_building_name"
 	      android:gravity="center_vertical"
 	      android:padding="2dp"/>
-</RelativeLayout>
+          
+          <TextView 
+	      android:id="@+id/detail_building_distance_value"
+	      android:textAppearance="?android:attr/textAppearanceMedium"
+	      android:layout_width="match_parent"
+	      android:layout_height="35dp"
+	      android:gravity="center_vertical"
+	      android:padding="2dp"/>
+          
+    </TableRow>
+    
+     <TableRow
+         android:id="@+id/tableRow4"
+         android:layout_height="wrap_content"
+         android:layout_weight="1" >
+         
+       	<fragment android:id="@+id/details_map"
+        class="com.google.android.gms.maps.MapFragment" 
+		android:layout_weight="1"
+		android:layout_height="fill_parent"
+ 		tools:ignore="MissingPrefix"
+		map:cameraBearing="0"
+		map:cameraTargetLat="@+id/detail_building_lat_value"
+		map:cameraTargetLng="@+id/detail_building_long_value"
+		map:cameraZoom="15"
+		map:mapType="normal"
+		map:uiCompass="true"
+		map:uiRotateGestures="true"
+		map:uiScrollGestures="true"
+		map:uiTiltGestures="true"
+		map:uiZoomControls="false"
+		map:uiZoomGestures="true" />
+     </TableRow>
+ 
+</TableLayout>
