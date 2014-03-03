@@ -42,16 +42,21 @@ public class BuildingDetail extends Activity {
 		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
 		
-		Intent passedIn = getIntent();
-		//if (passedIn.hasExtra("buildingID")){
-			double latLang[]; 
-			TextView tv;
-			bd = new Building();
-			bd.setName("william");
-			bd.setAccessible(true);
-			//44.559701, -123.281609 Reser stadium
-			bd.setLatLng(44.559701, -123.281609);
-			//bd = populate(getIntent(), db);
+		double latLang[]; 
+		TextView tv;
+		
+		//Take this part out when building id queries are finished
+		bd = new Building();
+		bd.setName("Reser Stadium");
+		bd.setAccessible(true);
+		//44.559701, -123.281609 Reser stadium
+		bd.setLatLng(44.559701, -123.281609);
+		//End that part
+		//Replace with:
+		//bd = populate(getIntent(), db);
+		
+		//populating fields
+		if (bd != null){
 			tv = (TextView) findViewById(R.id.detail_building_value);
 			tv.setText(bd.getName());
 			tv = (TextView) findViewById(R.id.detail_building_accessible_value);
@@ -61,21 +66,15 @@ public class BuildingDetail extends Activity {
 				tv.setText("No");
 			}
 			latLang = bd.getLatLng();
-			//tv.findViewById(R.id.detail_building_distance_value);
-			//tv.setText(buildingDistance(bd.getLatLng(), );
+			tv = (TextView) findViewById(R.id.detail_building_distance_value);
+			tv.setText("Connecting to Satellites...");
 			
+			//Set map
 			map.addMarker(new MarkerOptions()
 	 		.title(bd.getName())
 	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
-			
 			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
-			
-			Location location = mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			tv = (TextView) findViewById(R.id.detail_building_distance_value);
-			Log.i("location", "Setting default latitude to " + String.valueOf(location.getLatitude()) + ", " + String.valueOf(location.getLongitude()));
-			double d = buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(), location.getLongitude()));
-			tv.setText(formatDistance(d, calculateTime(d)));
-		//}
+		}
 
 		
 	}
@@ -83,10 +82,6 @@ public class BuildingDetail extends Activity {
 	public Building populate(Intent i, BuildingsDataSource helper){
 		
 		Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
-		
-		if (tmp == null) {
-			this.finish();
-		}
 			
 		return tmp;
 	}
