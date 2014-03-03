@@ -18,7 +18,7 @@ import com.example.classlocus.data.*;
 public class SearchResultsActivity extends ListActivity {
 
 	private TextView txtQuery;
-	BuildingsDataSource database;
+	BuildingsRepository database;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +30,16 @@ public class SearchResultsActivity extends ListActivity {
 		
 		txtQuery = (TextView) findViewById(R.id.txtQuery);
 		
-		database = new BuildingsDataSource(this);
+		database = new BuildingsRepository(this);
 		
-		Building ex = new Building();
-		ex.setId(34);
-		ex.setName("Kelley Engineering Center");
-		ex.setAbbreviation("KEC");
-		ex.setLatLng(44.5679076, -123.2783046);
-		ex.setParentId(10);
-		ex.setAccessible(true);
+		Building a = new Building();
+		a.setName("Kelley Engineering Center");
+		a.setAbbreviation("KEC");
+		a.setLatLng(44.5679076, -123.2783046);
+		a.setParentId(10);
+		a.setAccessible(true);
 		
-		database.insertBuilding(ex);
+		database.saveBuilding(a);
 		
 		handleIntent(getIntent());
 	}
@@ -55,20 +54,23 @@ public class SearchResultsActivity extends ListActivity {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			
-			/*
-			List<Building> allBuildings = database.getAllBuildings();
-			List<String> names = new ArrayList<String>();
 			
-			for (Building building : allBuildings) {
-				names.add(building.toString());
+			List<Building> buildings = database.searchBuilding(query);
+			Object[] nameArray = new Object[buildings.size()];
+			int i = 0;
+			
+			
+			for (Building building : buildings) {
+				Object name = building.getName();
+				nameArray[i] = name;
+				i++;
 			}
-			*/
 			
 			Object[] sArray = {"This", "is", 3.5, true, 2, "for", "bla"};
 			
-			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, sArray);
+			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nameArray);
 			
-			txtQuery.setText("Results: " + query);
+			txtQuery.setText("Results: " + query + " (count: " + buildings.size() + ")");
 			
 			/*
 			if (names.size() > 0) {

@@ -9,7 +9,6 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -49,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL("CREATE VIRTUAL TABLE " + TABLE_BUILDINGS + " USING fts3 ("
 				+ COLUMN_ID + " integer primary key autoincrement, "
-				+ COLUMN_NAME + " unique on conflict ignore, " 
+				+ COLUMN_NAME + " unique, " 
 				+ COLUMN_ABBR + ", " + COLUMN_LAT + ", " 
 				+ COLUMN_LONG + ", " + COLUMN_PARENT + ", "
 				+ COLUMN_ACCESS + ");");
@@ -70,9 +69,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// SCRUD-compliant method; create and update
-	public long insert(long id, String name, String abbreviation, double[] latLng, long parentId, boolean accessible) {
+	public long insert(String name, String abbreviation, double[] latLng, long parentId, boolean accessible) {
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_ID, 0);
+		values.putNull(COLUMN_ID);
 		values.put(COLUMN_NAME, name);
 		values.put(COLUMN_ABBR, abbreviation);
 		values.put(COLUMN_LAT, latLng[0]);
@@ -80,12 +79,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_PARENT, parentId);
 		values.put(COLUMN_ACCESS, accessible);
 		
-		return database.insertWithOnConflict(TABLE_BUILDINGS, BaseColumns._ID, values, SQLiteDatabase.CONFLICT_REPLACE);
+		return database.insertWithOnConflict(TABLE_BUILDINGS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 	}
 	
 	// SCRUD-compliant method; delete
-	public boolean remove(long id) {
-		String whereClause = COLUMN_ID + " = " + id;
+	public boolean remove(String name) {
+		String whereClause = COLUMN_NAME + " LIKE " + name;
 		int rowsAffected = 0;
 			
 		rowsAffected = database.delete(TABLE_BUILDINGS, whereClause, null);

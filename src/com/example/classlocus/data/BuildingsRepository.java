@@ -15,23 +15,29 @@ public class BuildingsRepository {
 		dbHelper = DatabaseHelper.getInstance(context);
 	}
 
+	// deletes all buildings from the database
+	public void cleanBuilding() {
+		dbHelper.wipe();
+	}
+	
 	// create/update available through this method
 	public long saveBuilding(Building building) {
-		long id = building.getId();
 		String name = building.getName();
 		String abbreviation = building.getAbbreviation();
 		double[] latLng = building.getLatLng();
 		long parentId = building.getParentId();
 		boolean accessible = building.getAccessible();
 		
-		return dbHelper.insert(id, name, abbreviation, latLng, parentId, accessible);
+		return dbHelper.insert(name, abbreviation, latLng, parentId, accessible);
 	}
 	
 	// deletes from database
 	public boolean deleteBuilding(Building building) {
-		long id = building.getId();
+		//long id = building.getId();
+		//return dbHelper.remove(id);
 		
-		return dbHelper.remove(id);
+		String name = building.getName();
+		return dbHelper.remove(name);
 	}
 	
 	// returns null List object if no valid records exist in database
