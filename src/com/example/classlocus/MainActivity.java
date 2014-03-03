@@ -13,7 +13,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import com.example.classlocus.search.*;
-import com.example.classlocus.test.TestDatabaseActivity;
 
 import android.app.SearchManager;
 import android.widget.SearchView;
@@ -93,8 +92,6 @@ public class MainActivity extends Activity {
 			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
-			helpIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
-			startActivity(helpIntent);
 			return true;
 		} else if (itemId == R.id.settings) {
 			//settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
