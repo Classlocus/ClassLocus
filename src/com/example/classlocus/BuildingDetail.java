@@ -1,5 +1,8 @@
 package com.example.classlocus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.classlocus.data.*;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,6 +28,7 @@ public class BuildingDetail extends Activity {
 	LocationManager mgr;
 	Building bd;
 	GoogleMap map;
+	BuildingsRepository db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,7 @@ public class BuildingDetail extends Activity {
 		double latLang[]; 
 		TextView tv;
 		
-		//bd = populate(getIntent(), db);
+		bd = populate(getIntent(), db);
 		
 		//populating fields
 		if (bd != null){
@@ -66,12 +70,13 @@ public class BuildingDetail extends Activity {
 		
 	}
 	
-	//public Building populate(Intent i, BuildingsDataSource helper){
+	public Building populate(Intent i, BuildingsRepository helper){
+		List<Building> buildings = new ArrayList<Building>();		
 		
-	//	Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
+		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
 			
-	//	return tmp;
-	//}
+		return buildings.get(0);
+	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
