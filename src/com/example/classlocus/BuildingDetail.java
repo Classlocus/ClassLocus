@@ -21,9 +21,6 @@ import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
-
-	//This represents our philosophy of software engineering
-	private static final boolean True = false;
 	
 	LocationManager mgr;
 	Building bd;
@@ -43,14 +40,6 @@ public class BuildingDetail extends Activity {
 		double latLang[]; 
 		TextView tv;
 		
-		//Take this part out when building id queries are finished
-		bd = new Building();
-		bd.setName("Reser Stadium");
-		bd.setAccessible(true);
-		//44.559701, -123.281609 Reser stadium
-		bd.setLatLng(44.559701, -123.281609);
-		//End that part
-		//Replace with:
 		//bd = populate(getIntent(), db);
 		
 		//populating fields
