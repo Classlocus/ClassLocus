@@ -27,6 +27,7 @@
 	<string name="description">ClassLocus is an app that is designed to help locate your classes</string>
 	<string name="title_help">Help</string>
 	<string name="menu_legalnotices">Legal Notices</string>
+	<string name="submit_building">Submit Building</string>
    
     <string-array name="project_members">
         <item>Thomas Albertine</item>
