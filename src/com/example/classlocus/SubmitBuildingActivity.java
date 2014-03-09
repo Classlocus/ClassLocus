@@ -1,9 +1,11 @@
 package com.example.classlocus;
 
 import com.example.classlocus.data.Building;
+import com.example.classlocus.data.BuildingsRepository;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -15,15 +17,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class SubmitBuildingActivity extends Activity {
-	private Building building = new Building();
-
-	
+	Building building = new Building();
+	BuildingsRepository database = new BuildingsRepository(this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+	
 		setContentView(R.layout.activity_submit_building);
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
 
@@ -31,7 +33,6 @@ public class SubmitBuildingActivity extends Activity {
 
 		submit.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
 				final EditText buildingNameText = (EditText) findViewById(R.id.edit_text_building_name);
 				final EditText buildingAbbvText = (EditText) findViewById(R.id.edit_text_abbreviation);
 				final CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox1);
@@ -40,13 +41,20 @@ public class SubmitBuildingActivity extends Activity {
 				String buildingAbbv = buildingAbbvText.getText().toString();
 				building.setName(buildingName);
 				building.setAbbreviation(buildingAbbv);
+				building.setParentId(10);
+				building.setLatLng(44.56718, -123.27852);
 
 				if (checkBox.isChecked()) {
 					building.setAccessible(true);
 				} else {
 					building.setAccessible(false);
 				}
-
+				
+				if (database != null){
+					TextView textView2 = (TextView) findViewById(R.id.textView2);
+					database.saveBuilding(building);
+					textView2.setText("SUCCESS");
+				}
 			}
 		});
 
