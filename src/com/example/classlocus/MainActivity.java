@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private Intent buildingIntent;
-	private Intent settingsIntent;
 	private Intent helpIntent;
 	
 	@Override
@@ -95,10 +94,6 @@ public class MainActivity extends Activity {
 		} else if (itemId == R.id.help) {
 			helpIntent = new Intent(MainActivity.this, HelpActivity.class);
 			startActivity(helpIntent);
-			return true;
-		} else if (itemId == R.id.settings) {
-			//settingsIntent = new Intent(MainActivity.this, TestDatabaseActivity.class);
-			//startActivity(settingsIntent);
 			return true;
 		} else if (itemId == R.id.legalnotices) {
 			String LicenseInfo = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(

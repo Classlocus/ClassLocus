@@ -10,6 +10,10 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
@@ -19,6 +23,7 @@ public class SearchResultsActivity extends ListActivity {
 
 	private TextView txtQuery;
 	BuildingsRepository database;
+	long[] idArray;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,15 @@ public class SearchResultsActivity extends ListActivity {
 		handleIntent(getIntent());
 	}
 	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu from XML
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.search_results_menu, menu);
+		
+		return super.onCreateOptionsMenu(menu);
+				
+	}
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		setIntent(intent);
@@ -59,17 +73,19 @@ public class SearchResultsActivity extends ListActivity {
 			List<Building> buildings = database.searchBuilding(query);
 			Object[] nameArray = new Object[buildings.size()];
 			int i = 0;
+			idArray = new long[buildings.size()];
 			
 			
 			for (Building building : buildings) {
 				Object name = building.getName();
 				nameArray[i] = name;
+				idArray[i] = building.getId();
 				i++;
 			}
-			
-			Object[] sArray = {"This", "is", 3.5, true, 2, "for", "bla"};
-			
+					
 			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nameArray);
+			
+			
 			
 			txtQuery.setText("Results: " + query + " (count: " + buildings.size() + ")");
 			
@@ -83,5 +99,16 @@ public class SearchResultsActivity extends ListActivity {
 			
 			setListAdapter(adp);
 		}
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id){
+		super.onListItemClick(l, v, position, id);
+		
+		//Onclick for a given button item, given the index in the array.
+		Intent i = new Intent(this, BuildingDetail.class);
+		long buildingID = idArray[position];
+		i.putExtra("buildingID", buildingID);
+		startActivity(i);
 	}
 }

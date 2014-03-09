@@ -1,5 +1,8 @@
 package com.example.classlocus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.classlocus.data.*;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,13 +24,11 @@ import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
-
-	//This represents our philosophy of software engineering
-	private static final boolean True = false;
 	
 	LocationManager mgr;
 	Building bd;
 	GoogleMap map;
+	BuildingsRepository db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		db = new BuildingsRepository(this);
+		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -43,14 +46,6 @@ public class BuildingDetail extends Activity {
 		double latLang[]; 
 		TextView tv;
 		
-		//Take this part out when building id queries are finished
-		bd = new Building();
-		bd.setName("Reser Stadium");
-		bd.setAccessible(true);
-		//44.559701, -123.281609 Reser stadium
-		bd.setLatLng(44.559701, -123.281609);
-		//End that part
-		//Replace with:
 		//bd = populate(getIntent(), db);
 		
 		//populating fields
@@ -73,16 +68,16 @@ public class BuildingDetail extends Activity {
 	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
 			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
 		}
-
-		
 	}
 	
-	//public Building populate(Intent i, BuildingsDataSource helper){
-		
-	//	Building tmp = helper.getBuilding(i.getLongExtra("buildingID", 0));
-			
-	//	return tmp;
-	//}
+	public Building populate(Intent i, BuildingsRepository helper){
+		List<Building> buildings;		
+		Log.d("size", String.valueOf(i.getLongExtra("buildingID", -1)));
+		Log.d("size", i.getStringExtra("buildingName"));
+		buildings = helper.searchBuilding(i.getStringExtra("buildingName"));
+		Log.d("size", String.valueOf(buildings.size()));
+		return buildings.get(0);
+	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
