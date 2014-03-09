@@ -35,7 +35,7 @@ public class BuildingDetail extends Activity {
 		setContentView(R.layout.activity_building_detail);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		
+				
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
