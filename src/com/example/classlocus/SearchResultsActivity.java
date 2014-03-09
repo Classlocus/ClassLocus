@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
@@ -46,6 +48,15 @@ public class SearchResultsActivity extends ListActivity {
 		database.saveBuilding(a);
 		
 		handleIntent(getIntent());
+	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu from XML
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.search_results_menu, menu);
+		
+		return super.onCreateOptionsMenu(menu);
+				
 	}
 	
 	@Override
