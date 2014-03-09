@@ -32,7 +32,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
-    		android:value="AIzaSyAAnIihmicnlLd-5XZ06Cfxyi25HSsoC2s"/>
+    		android:value="AIzaSyCtfcNstuLQEkZvvlKS_ouD40Z6Qrdpl64"/>
         
         <provider android:name="com.example.classlocus.search.SearchSuggestionProvider"
               android:authorities="com.example.classlocus.search.SearchSuggestionProvider" />
@@ -81,7 +81,7 @@
         </activity>
         
         <activity
-        	android:name="com.example.classlocus.Help"
+        	android:name="com.example.classlocus.HelpActivity"
         	android:label="@string/title_help"
         	android:parentActivityName="com.example.classlocus.MainActivity">
         	<meta-data

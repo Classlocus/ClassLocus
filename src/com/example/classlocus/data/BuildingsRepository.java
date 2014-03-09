@@ -33,11 +33,19 @@ public class BuildingsRepository {
 	
 	// deletes from database
 	public boolean deleteBuilding(Building building) {
-		//long id = building.getId();
-		//return dbHelper.remove(id);
+		Cursor cursor = dbHelper.read(building.getId()); 
+		if (cursor.getCount() > 0) {
+			return dbHelper.remove(building.getId());
+		}
 		
-		String name = building.getName();
-		return dbHelper.remove(name);
+		cursor = dbHelper.search(building.getName());
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			Building target = cursorToBuilding(cursor);
+			return dbHelper.remove(target.getId());
+		}
+		
+		return false;
 	}
 	
 	// returns null List object if no valid records exist in database

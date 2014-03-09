@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-public class Help extends Activity {
+public class HelpActivity extends Activity {
 
 	static String googleDisclaimerDialog;
 	
