@@ -46,7 +46,8 @@ public class BuildingDetail extends Activity {
 		double latLang[]; 
 		TextView tv;
 		
-		//bd = populate(getIntent(), db);
+		if (getIntent().hasExtra("buildingID"))
+			bd = populate(getIntent(), db);
 		
 		//populating fields
 		if (bd != null){
@@ -72,10 +73,9 @@ public class BuildingDetail extends Activity {
 	
 	public Building populate(Intent i, BuildingsRepository helper){
 		List<Building> buildings;		
-		Log.d("size", String.valueOf(i.getLongExtra("buildingID", -1)));
-		Log.d("size", i.getStringExtra("buildingName"));
-		buildings = helper.searchBuilding(i.getStringExtra("buildingName"));
-		Log.d("size", String.valueOf(buildings.size()));
+	
+		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
+
 		return buildings.get(0);
 	}
 
