@@ -5,7 +5,6 @@ import com.example.classlocus.data.BuildingsRepository;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -23,9 +22,9 @@ public class SubmitBuildingActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	
+
 		setContentView(R.layout.activity_submit_building);
-		
+
 		// Show the Up button in the action bar.
 		setupActionBar();
 
@@ -49,8 +48,8 @@ public class SubmitBuildingActivity extends Activity {
 				} else {
 					building.setAccessible(false);
 				}
-				
-				if (database != null){
+
+				if (database != null) {
 					TextView textView2 = (TextView) findViewById(R.id.textView2);
 					database.saveBuilding(building);
 					textView2.setText("SUCCESS");
@@ -89,13 +88,6 @@ public class SubmitBuildingActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	public void createBuilding() {
-
-		// building.setAbbreviation(getText(R.id.edit_text_abbreviation)
-		// .toString());
-
 	}
 
 }
