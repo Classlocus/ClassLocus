@@ -22,6 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	
 	public static final String TABLE_BUILDINGS = "buildings";
+	public static final String TABLE_FAVORITES = "favorites";
 	public static final String TABLE_BUILDINGS_FTS = "buildings_fts";
 	private static final String TABLE_BUILDINGS_INSERT = "buildings_insert";
 	private static final String TABLE_BUILDINGS_DELETE = "buildings_delete";
@@ -33,6 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_LONG = "longitude";
 	public static final String COLUMN_PARENT = "parentLocation";
 	public static final String COLUMN_ACCESS = "accessible";
+	
+	public static final String FAVORITES_ID = "fid";
+	public static final String FAVORITES_BUILDING = "bid";
 	
 	// Singleton function
 	public static DatabaseHelper getInstance(Context context) {
@@ -50,6 +54,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.w(DatabaseHelper.class.getName(), "Updating " + TAG + " schema");
+		
+		db.execSQL("PRAGMA foreign_keys=ON;");
 		
 		db.execSQL("CREATE TABLE " + TABLE_BUILDINGS + " ("
 				+ COLUMN_ID + " integer primary key autoincrement, "
@@ -85,6 +91,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ " BEGIN "
 					+ "DELETE FROM " + TABLE_BUILDINGS_FTS + " WHERE rowid = OLD.rowid;"
 				+ " END ");
+		
+		db.execSQL("CREATE TABLE "+ TABLE_FAVORITES + " ("
+				+ FAVORITES_ID + " integer primary key autoincrement, "
+				+ FAVORITES_BUILDING + " integer, FOREIGN KEY(" + FAVORITES_BUILDING + ") REFERENCES " 
+				+ TABLE_BUILDINGS + "(" + COLUMN_ID + "));");
 	}
 	
 	@Override
@@ -94,12 +105,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
 		onCreate(db);
 	}
 	
 	public void wipe() {
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
 		onCreate(database);
 	}
 	
@@ -116,6 +129,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		return database.insertWithOnConflict(TABLE_BUILDINGS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 	}
+	/*
+	public long insert(long id) {
+		ContentValues values = new ContentValues();
+		values.putNull(FAVORITES_ID);
+		values.put(FAVORITES_BUILDING, id);
+		
+		return database.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+	}*/
 	
 	// SCRUD-compliant method; delete
 	public boolean remove(long id) {
