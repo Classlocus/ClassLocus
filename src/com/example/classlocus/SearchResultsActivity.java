@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
@@ -19,6 +20,7 @@ import com.example.classlocus.data.*;
 
 public class SearchResultsActivity extends ListActivity {
 
+	private Intent submitIntent;
 	private TextView txtQuery;
 	BuildingsRepository database;
 	
@@ -54,6 +56,18 @@ public class SearchResultsActivity extends ListActivity {
 		
 		return super.onCreateOptionsMenu(menu);
 				
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    int itemId = item.getItemId();
+	    
+	    if (itemId == R.id.submit_building) {
+			submitIntent = new Intent(SearchResultsActivity.this, SubmitBuildingActivity.class);
+			startActivity(submitIntent);
+			return true;
+	    }
+	    
+		return false;
 	}
 	
 	@Override
