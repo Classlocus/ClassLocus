@@ -37,6 +37,8 @@ public class BuildingDetail extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		
+		db = new BuildingsRepository(this);
+		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
@@ -44,7 +46,7 @@ public class BuildingDetail extends Activity {
 		double latLang[]; 
 		TextView tv;
 		
-		bd = populate(getIntent(), db);
+		//bd = populate(getIntent(), db);
 		
 		//populating fields
 		if (bd != null){
@@ -66,15 +68,14 @@ public class BuildingDetail extends Activity {
 	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
 			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
 		}
-
-		
 	}
 	
 	public Building populate(Intent i, BuildingsRepository helper){
-		List<Building> buildings = new ArrayList<Building>();		
-		
-		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
-			
+		List<Building> buildings;		
+		Log.d("size", String.valueOf(i.getLongExtra("buildingID", -1)));
+		Log.d("size", i.getStringExtra("buildingName"));
+		buildings = helper.searchBuilding(i.getStringExtra("buildingName"));
+		Log.d("size", String.valueOf(buildings.size()));
 		return buildings.get(0);
 	}
 
