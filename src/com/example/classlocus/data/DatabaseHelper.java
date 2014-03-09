@@ -19,9 +19,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String TAG = "LocusDatabase";
 	public static final String DATABASE_NAME = "locus.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 1;
 	
 	public static final String TABLE_BUILDINGS = "buildings";
+	public static final String TABLE_BUILDINGS_FTS = "buildings_fts";
+	private static final String TABLE_BUILDINGS_INSERT = "buildings_insert";
+	private static final String TABLE_BUILDINGS_DELETE = "buildings_delete";
+	
 	public static final String COLUMN_ID = BaseColumns._ID;
 	public static final String COLUMN_NAME = "name";
 	public static final String COLUMN_ABBR = "abbreviation";
@@ -30,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_PARENT = "parentLocation";
 	public static final String COLUMN_ACCESS = "accessible";
 	
+	// Singleton function
 	public static DatabaseHelper getInstance(Context context) {
 		if (sInstance == null) {
 			sInstance = new DatabaseHelper(context.getApplicationContext());
@@ -46,12 +51,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		Log.w(DatabaseHelper.class.getName(), "Updating " + TAG + " schema");
 		
-		db.execSQL("CREATE VIRTUAL TABLE " + TABLE_BUILDINGS + " USING fts3 ("
+		db.execSQL("CREATE TABLE " + TABLE_BUILDINGS + " ("
 				+ COLUMN_ID + " integer primary key autoincrement, "
-				+ COLUMN_NAME + " unique, " 
+				+ COLUMN_NAME + " text not null unique, " 
+				+ COLUMN_ABBR + " text, " 
+				+ COLUMN_LAT + " float, " 
+				+ COLUMN_LONG + " float, " 
+				+ COLUMN_PARENT + " integer, "
+				+ COLUMN_ACCESS + " bit not null);");
+		
+		db.execSQL("CREATE VIRTUAL TABLE " + TABLE_BUILDINGS_FTS + " USING fts3("
+				+ COLUMN_ID + ", " + COLUMN_NAME + ", "
 				+ COLUMN_ABBR + ", " + COLUMN_LAT + ", " 
-				+ COLUMN_LONG + ", " + COLUMN_PARENT + ", "
+				+ COLUMN_LONG + ", " + COLUMN_PARENT + ", " 
 				+ COLUMN_ACCESS + ");");
+		
+		// trigger for record insertion
+		db.execSQL("CREATE TRIGGER " + TABLE_BUILDINGS_INSERT
+				+ " AFTER INSERT ON " + TABLE_BUILDINGS
+				+ " BEGIN "
+					+ "INSERT INTO " + TABLE_BUILDINGS_FTS + "(rowid, " + COLUMN_ID + ", " 
+					+ COLUMN_NAME + ", " + COLUMN_ABBR + ", " + COLUMN_LAT + ", "
+					+ COLUMN_LONG + ", " + COLUMN_PARENT + ", " + COLUMN_ACCESS + ") "
+					+ "VALUES (last_insert_rowid(), last_insert_rowid(), "
+					+ "NEW." + COLUMN_NAME + ", NEW." + COLUMN_ABBR + ", "
+					+ "NEW." + COLUMN_LAT + ", NEW." + COLUMN_LONG + ", "
+					+ "NEW." + COLUMN_PARENT + ", NEW." + COLUMN_ACCESS + "); "
+				+ " END ");
+		
+		// trigger for record deletion
+		db.execSQL("CREATE TRIGGER " + TABLE_BUILDINGS_DELETE
+				+ " AFTER DELETE ON " + TABLE_BUILDINGS
+				+ " BEGIN "
+					+ "DELETE FROM " + TABLE_BUILDINGS_FTS + " WHERE rowid = OLD.rowid;"
+				+ " END ");
 	}
 	
 	@Override
@@ -60,11 +93,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				+ oldVersion + " to " + newVersion + ", which will destroy all old data");
 		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
 		onCreate(db);
 	}
 	
 	public void wipe() {
 		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
+		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
 		onCreate(database);
 	}
 	
@@ -83,12 +118,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// SCRUD-compliant method; delete
-	public boolean remove(String name) {
-		String whereClause = COLUMN_NAME + " LIKE " + name;
+	public boolean remove(long id) {
+		String whereClause = COLUMN_ID + " == " + id;
 		int rowsAffected = 0;
-			
+		
 		rowsAffected = database.delete(TABLE_BUILDINGS, whereClause, null);
-			
+		
 		if (rowsAffected == 0) {
 			return false;
 		}
@@ -97,15 +132,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	// SCRUD-compliant method; read
 	public Cursor read(long id) {
-		Cursor cursor = null;
-			
 		String[] columns = { COLUMN_ID, COLUMN_NAME, COLUMN_ABBR, COLUMN_LAT,
 							COLUMN_LONG, COLUMN_PARENT, COLUMN_ACCESS };
 		String selection = COLUMN_ID + " = " + id;
 					
-		cursor = database.query(TABLE_BUILDINGS, columns, selection, null, null, null, null);
-			
-		return cursor;
+		return database.query(TABLE_BUILDINGS, columns, selection, null, null, null, null);
 	}
 	
 	// SCRUD-compliant method; search
@@ -113,13 +144,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		Cursor cursor = null;
 		
 		if (!TextUtils.isEmpty(query)) {
+			String[] columns = { COLUMN_ID, COLUMN_NAME, COLUMN_ABBR, COLUMN_LAT, COLUMN_LONG, COLUMN_PARENT, COLUMN_ACCESS };
+			String selection = DatabaseHelper.TABLE_BUILDINGS_FTS + " MATCH ?";
+			String[] selectionArgs = { String.format(DatabaseHelper.COLUMN_NAME + ":%s* OR " 
+					+ DatabaseHelper.COLUMN_ABBR + ":%s*", query.toString(), query.toString()) }; 
 			
-			String[] columns = { COLUMN_ID, COLUMN_NAME, COLUMN_ABBR, COLUMN_LAT,
-					COLUMN_LONG, COLUMN_PARENT, COLUMN_ACCESS };
-			String selection = DatabaseHelper.TABLE_BUILDINGS + " MATCH ?";
-			String[] selectionArgs = { DatabaseHelper.COLUMN_NAME + ": " + query.toString() + "*" };
-			
-			cursor = database.query(DatabaseHelper.TABLE_BUILDINGS, columns, selection, selectionArgs, null, null, null);
+			cursor = database.query(DatabaseHelper.TABLE_BUILDINGS_FTS, columns, selection, selectionArgs, null, null, null);
 		}
 		
 		return cursor;
