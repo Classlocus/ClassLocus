@@ -2,7 +2,9 @@ package com.example.classlocus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.SearchableInfo;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.content.Intent;
 import android.content.Context;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ public class MainActivity extends Activity {
      		.title("Oregon State University")
      		.snippet("A land-, sea-, and space-grant university.")
      		.position(oregonstate));
+		
 	}
 	
 	@Override
@@ -51,7 +54,8 @@ public class MainActivity extends Activity {
 		SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
 		
 		//Assumes current activity is the searchable activity
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+		SearchableInfo si = searchManager.getSearchableInfo(getComponentName());
+		searchView.setSearchableInfo(si);
 		searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 		
 		return super.onCreateOptionsMenu(menu);

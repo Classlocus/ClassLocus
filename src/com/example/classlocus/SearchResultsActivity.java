@@ -9,7 +9,7 @@ import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.SearchRecentSuggestions;
 import android.view.View;
 import android.widget.ListView;
 import android.view.Menu;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
 import com.example.classlocus.data.*;
+import com.example.classlocus.search.SearchSuggestionProvider;
 
 public class SearchResultsActivity extends ListActivity {
 
@@ -48,6 +49,15 @@ public class SearchResultsActivity extends ListActivity {
 		database.saveBuilding(a);
 		
 		handleIntent(getIntent());
+		
+		Intent intent = getIntent();
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())){
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, 
+					SearchSuggestionProvider.AUTHORITY, 
+					SearchSuggestionProvider.MODE);
+			suggestions.saveRecentQuery(query, null);
+		}
 	}
 	
 	public boolean onCreateOptionsMenu(Menu menu) {
