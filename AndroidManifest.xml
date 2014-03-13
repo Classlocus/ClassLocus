@@ -89,6 +89,15 @@
         	    android:value="com.example.classlocus.MainActivity" />
         </activity>
         
+        <activity
+        	android:name="com.example.classlocus.SubmitBuildingActivity"
+        	android:label="@string/submit_building"
+        	android:parentActivityName="com.example.classlocus.SearchResultsActivity">
+        	<meta-data
+        	    android:name="android.support.PARENT_ACTIVITY"
+        	    android:value="com.example.classlocus.SearchResultsActivity" />
+        </activity>
+        
     </application>
 
 </manifest>
