@@ -160,6 +160,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return database.query(TABLE_BUILDINGS, columns, selection, null, null, null, null);
 	}
 	
+	public Cursor exists(long id) {
+		String[] columns = { FAVORITES_BUILDING };
+		String selection = FAVORITES_BUILDING + " = " + id;
+		
+		return database.query(TABLE_FAVORITES, columns, selection, null, null, null, null);
+	}
+	
 	// SCRUD-compliant method; search
 	public Cursor search(String query) {
 		Cursor cursor = null;

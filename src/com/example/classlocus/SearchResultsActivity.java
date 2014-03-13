@@ -36,7 +36,6 @@ public class SearchResultsActivity extends ListActivity {
 		textQuery = (TextView) findViewById(R.id.textQuery);
 		
 		database = new BuildingsRepository(this);
-		database.cleanBuilding();
 		
 		Building a = new Building();
 		a.setName("Reser Stadium");

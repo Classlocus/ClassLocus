@@ -40,7 +40,6 @@ public class MainActivity extends Activity {
      		.title("Oregon State University")
      		.snippet("A land-, sea-, and space-grant university.")
      		.position(oregonstate));
-		
 	}
 	
 	@Override

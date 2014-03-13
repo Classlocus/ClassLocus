@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
@@ -93,11 +94,15 @@ public class BuildingDetail extends Activity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onPrepareOptionsMenu (Menu menu){
+		MenuItem fav;
 		getMenuInflater().inflate(R.menu.building_detail, menu);
-		return true;
-	}
+	    fav = menu.findItem(R.id.action_favorites);
+	    if(db.isFavorite(bd)){
+	    	fav.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
+	    }
+	    return true;
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

@@ -53,6 +53,14 @@ public class BuildingsRepository {
 		return dbHelper.insert(building.getId());
 	}
 	
+	public boolean isFavorite(Building building) {
+		Cursor cursor = dbHelper.exists(building.getId());
+		if (cursor.getCount() == 1) {
+			return true;
+		}
+		return false;
+	}
+	
 	// returns null List object if no valid records exist in database
 	public List<Building> searchBuilding(long id) {
 		List<Building> buildings = new ArrayList<Building>();
