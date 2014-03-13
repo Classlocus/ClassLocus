@@ -28,6 +28,10 @@
 	<string name="title_help">Help</string>
 	<string name="menu_legalnotices">Legal Notices</string>
 	<string name="submit_building">Submit Building</string>
+	<string name="building_name">Building Name</string>
+	<string name="abbreviation">Abbreviation</string>
+	<string name="submit">Submit</string>
+	<string name="wheelchair_accessible">Wheelchair Accessible?</string>
    
     <string-array name="project_members">
         <item>Thomas Albertine</item>

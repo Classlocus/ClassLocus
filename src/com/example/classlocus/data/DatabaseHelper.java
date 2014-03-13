@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	private static final String TAG = "LocusDatabase";
 	public static final String DATABASE_NAME = "locus.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	
 	public static final String TABLE_BUILDINGS = "buildings";
 	public static final String TABLE_FAVORITES = "favorites";

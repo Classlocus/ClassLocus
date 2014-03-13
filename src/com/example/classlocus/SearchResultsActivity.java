@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 
@@ -21,6 +22,7 @@ import com.example.classlocus.search.SearchSuggestionProvider;
 public class SearchResultsActivity extends ListActivity {
 	
 	private TextView textQuery;
+	private Intent submitIntent;
 	BuildingsRepository database;
 	List<Building> buildings;
 	long[] idArray;
@@ -40,7 +42,7 @@ public class SearchResultsActivity extends ListActivity {
 		Building a = new Building();
 		a.setName("Reser Stadium");
 		a.setAbbreviation("RES");
-		a.setLatLng(44.59701, -123.281609);
+		a.setLatLng(44.5597236, -123.2825924);
 		a.setParentId(10);
 		a.setAccessible(true);
 		
@@ -65,6 +67,18 @@ public class SearchResultsActivity extends ListActivity {
 		
 		return super.onCreateOptionsMenu(menu);
 				
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    int itemId = item.getItemId();
+	    
+	    if (itemId == R.id.submit_building) {
+			submitIntent = new Intent(SearchResultsActivity.this, SubmitBuildingActivity.class);
+			startActivity(submitIntent);
+			return true;
+	    }
+	    
+		return false;
 	}
 	
 	@Override
