@@ -38,12 +38,11 @@ public class SearchResultsActivity extends ListActivity {
 		textQuery = (TextView) findViewById(R.id.textQuery);
 		
 		database = new BuildingsRepository(this);
-		database.cleanBuilding();
 		
 		Building a = new Building();
 		a.setName("Reser Stadium");
 		a.setAbbreviation("RES");
-		a.setLatLng(44.59701, -123.281609);
+		a.setLatLng(44.5597236, -123.2825924);
 		a.setParentId(10);
 		a.setAccessible(true);
 		

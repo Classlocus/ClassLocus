@@ -73,9 +73,8 @@ public class BuildingDetail extends Activity {
 	
 	public Building populate(Intent i, BuildingsRepository helper){
 		List<Building> buildings;		
-	
-		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
 
+		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
 		return buildings.get(0);
 	}
 

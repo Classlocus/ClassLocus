@@ -51,8 +51,10 @@ public class SubmitBuildingActivity extends Activity {
 
 				if (database != null) {
 					TextView textView2 = (TextView) findViewById(R.id.textView2);
-					database.saveBuilding(building);
-					textView2.setText("SUCCESS");
+					long id = database.saveBuilding(building);
+					if (id > 0) {
+						textView2.setText("Building Added (id: " + id + ")");
+					}
 				}
 			}
 		});
