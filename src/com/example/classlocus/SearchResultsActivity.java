@@ -1,8 +1,6 @@
 package com.example.classlocus;
 
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
@@ -21,9 +19,10 @@ import com.example.classlocus.data.*;
 import com.example.classlocus.search.SearchSuggestionProvider;
 
 public class SearchResultsActivity extends ListActivity {
-
-	private TextView txtQuery;
+	
+	private TextView textQuery;
 	BuildingsRepository database;
+	List<Building> buildings;
 	long[] idArray;
 	
 	@Override
@@ -34,7 +33,7 @@ public class SearchResultsActivity extends ListActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
-		txtQuery = (TextView) findViewById(R.id.txtQuery);
+		textQuery = (TextView) findViewById(R.id.textQuery);
 		
 		database = new BuildingsRepository(this);
 		database.cleanBuilding();
@@ -78,34 +77,20 @@ public class SearchResultsActivity extends ListActivity {
 	private void handleIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
+			buildings = database.searchBuilding(query);
 			
-			
-			List<Building> buildings = database.searchBuilding(query);
-			Object[] nameArray = new Object[buildings.size()];
-			int i = 0;
+			Object[] buildingNames = new Object[buildings.size()];
 			idArray = new long[buildings.size()];
-			
+			int i = 0;
 			
 			for (Building building : buildings) {
-				Object name = building.getName();
-				nameArray[i] = name;
+				buildingNames[i] = (Object) building.getName();
 				idArray[i] = building.getId();
 				i++;
 			}
-					
-			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nameArray);
 			
-			
-			
-			txtQuery.setText("Results: " + query + " (count: " + buildings.size() + ")");
-			
-			/*
-			if (names.size() > 0) {
-				txtQuery.setText("Results: " + names.get(0));
-			} else {
-				txtQuery.setText("Results: names is empty");
-			}
-			*/
+			textQuery.setText(buildings.size() + " results found for '" + query + "'");
+			ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, buildingNames);
 			
 			setListAdapter(adp);
 		}
@@ -115,7 +100,7 @@ public class SearchResultsActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id){
 		super.onListItemClick(l, v, position, id);
 		
-		//Onclick for a given button item, given the index in the array.
+		//OnClick for a given button item, given the index in the array.
 		Intent i = new Intent(this, BuildingDetail.class);
 		long buildingID = idArray[position];
 		i.putExtra("buildingID", buildingID);
