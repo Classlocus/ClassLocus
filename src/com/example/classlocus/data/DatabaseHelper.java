@@ -95,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE "+ TABLE_FAVORITES + " ("
 				+ FAVORITES_ID + " integer primary key autoincrement, "
 				+ FAVORITES_BUILDING + " integer, FOREIGN KEY(" + FAVORITES_BUILDING + ") REFERENCES " 
-				+ TABLE_BUILDINGS + "(" + COLUMN_ID + "));");
+				+ TABLE_BUILDINGS + "(" + COLUMN_ID + ") ON DELETE CASCADE);");
 	}
 	
 	@Override

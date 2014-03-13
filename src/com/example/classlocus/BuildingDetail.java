@@ -113,8 +113,7 @@ public class BuildingDetail extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_favorites:
-			Drawable saved = getResources().getDrawable( R.drawable.ic_action_important);
-			item.setIcon(saved);
+			item.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 			addToFavorites();
 			return true;
 		}
@@ -126,8 +125,7 @@ public class BuildingDetail extends Activity {
 		return distance;
 	}
 	
-	public void addToFavorites() {
-		
+	public void addToFavorites() {	
 		db.saveFavorite(bd);
 	}
 	
