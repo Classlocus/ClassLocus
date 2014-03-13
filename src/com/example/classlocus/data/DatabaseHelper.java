@@ -129,14 +129,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 		return database.insertWithOnConflict(TABLE_BUILDINGS, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 	}
-	/*
+
 	public long insert(long id) {
 		ContentValues values = new ContentValues();
 		values.putNull(FAVORITES_ID);
 		values.put(FAVORITES_BUILDING, id);
 		
 		return database.insertWithOnConflict(TABLE_FAVORITES, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-	}*/
+	}
 	
 	// SCRUD-compliant method; delete
 	public boolean remove(long id) {
