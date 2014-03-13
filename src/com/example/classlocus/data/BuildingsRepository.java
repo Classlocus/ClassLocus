@@ -48,6 +48,11 @@ public class BuildingsRepository {
 		return false;
 	}
 	
+	public long saveFavorite(Building building) {
+		
+		return dbHelper.insert(building.getId());
+	}
+	
 	// returns null List object if no valid records exist in database
 	public List<Building> searchBuilding(long id) {
 		List<Building> buildings = new ArrayList<Building>();

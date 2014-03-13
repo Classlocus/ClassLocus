@@ -17,6 +17,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,6 +112,11 @@ public class BuildingDetail extends Activity {
 			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.action_favorites:
+			Drawable saved = getResources().getDrawable( R.drawable.ic_action_important);
+			item.setIcon(saved);
+			addToFavorites();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -118,6 +124,11 @@ public class BuildingDetail extends Activity {
 	public double buildingDistance(LatLng coord1, LatLng coord2){
 		double distance = SphericalUtil.computeDistanceBetween(coord1, coord2);
 		return distance;
+	}
+	
+	public void addToFavorites() {
+		
+		db.saveFavorite(bd);
 	}
 	
 	@Override
