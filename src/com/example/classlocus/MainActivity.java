@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchableInfo;
 import android.os.Bundle;
-import android.provider.SearchRecentSuggestions;
 import android.content.Intent;
 import android.content.Context;
 import android.widget.Toast;
@@ -29,16 +28,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_main);
-		
-		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-		//map.setMyLocationEnabled(true);
-		map.setBuildingsEnabled(true);
-		
-		LatLng oregonstate = new LatLng(44.5657285, -123.2788689);
-		map.addMarker(new MarkerOptions()
-     		.title("Oregon State University")
-     		.snippet("A land-, sea-, and space-grant university.")
-     		.position(oregonstate));
 	}
 	
 	@Override
@@ -64,21 +53,24 @@ public class MainActivity extends Activity {
 		super.onResume();
 		
 		if (checkPlayServices()) {
-			// Google Play Services are installed and GoogleMap object can be loaded
+			GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+			map.setMyLocationEnabled(true);
+			map.setBuildingsEnabled(true);
+			map.setIndoorEnabled(true);
+			
+			LatLng oregonstate = new LatLng(44.5657285, -123.2788689);
+			map.addMarker(new MarkerOptions()
+	     		.title("Oregon State University")
+	     		.snippet("A land-, sea-, and space-grant university.")
+	     		.position(oregonstate));
 		}
 	}
 	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case REQUEST_CODE_RECOVER_PLAY_SERVICES:
-				if (resultCode == RESULT_CANCELED) {
-					Toast.makeText(this, "Google Play Services must be installed.", Toast.LENGTH_SHORT).show();
-					finish();
-				}
-				return;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
+	protected void onPause() {
+		super.onPause();
+		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+		map.setIndoorEnabled(false);
 	}
 	
 	@Override
@@ -107,12 +99,25 @@ public class MainActivity extends Activity {
 		return false;
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case REQUEST_CODE_RECOVER_PLAY_SERVICES:
+				if (resultCode == RESULT_CANCELED) {
+					Toast.makeText(this, "Google Play Services must be installed.", Toast.LENGTH_SHORT).show();
+					finish();
+				}
+				return;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
 	private boolean checkPlayServices() {
 		int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 		
 		if (status != ConnectionResult.SUCCESS) {
 			if (GooglePlayServicesUtil.isUserRecoverableError(status)) {
-				showErrorDialog(status);
+				GooglePlayServicesUtil.getErrorDialog(status, this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
 		    } else {
 		    	Toast.makeText(this, "This device is not supported.", Toast.LENGTH_SHORT).show();
 		    	finish();
@@ -121,8 +126,4 @@ public class MainActivity extends Activity {
 		}
 		return true;
 	} 
-
-	void showErrorDialog(int code) {
-		GooglePlayServicesUtil.getErrorDialog(code, this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
-	}
 }

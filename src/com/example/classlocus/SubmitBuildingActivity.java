@@ -3,7 +3,6 @@ package com.example.classlocus;
 import com.example.classlocus.data.Building;
 import com.example.classlocus.data.BuildingsRepository;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -26,11 +25,6 @@ public class SubmitBuildingActivity extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle("New Building");
-		
-		
-
-		// Show the Up button in the action bar.
-		setupActionBar();
 
 		final Button submit = (Button) findViewById(R.id.submit_button);
 
@@ -63,15 +57,6 @@ public class SubmitBuildingActivity extends Activity {
 			}
 		});
 
-	}
-
-	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-		// Enable Up / Back navigation
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

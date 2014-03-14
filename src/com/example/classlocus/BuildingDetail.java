@@ -36,12 +36,15 @@ public class BuildingDetail extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_building_detail);
-		// Show the Up button in the action bar.
-		setupActionBar();
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle("Building Detail");
 		
 		db = new BuildingsRepository(this);
 		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
+		map.setMyLocationEnabled(true);
+		map.setBuildingsEnabled(true);
 		
 		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
 		
@@ -73,23 +76,25 @@ public class BuildingDetail extends Activity {
 		}
 	}
 	
+	@Override
+	public void onResume(){
+		super.onResume();
+		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
+		map.setIndoorEnabled(true);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mgr.removeUpdates(onLocationChange);
+		map.setIndoorEnabled(false);
+	}
+	
 	public Building populate(Intent i, BuildingsRepository helper){
 		List<Building> buildings;		
 
 		buildings = helper.searchBuilding(i.getLongExtra("buildingID", 0));
 		return buildings.get(0);
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		// Enable Up / Back navigation
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -125,17 +130,6 @@ public class BuildingDetail extends Activity {
 	
 	public void addToFavorites() {	
 		db.saveFavorite(bd);
-	}
-	
-	@Override
-	public void onResume(){
-		super.onResume();
-		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
-	}
-	
-	public void onPause(){
-		super.onPause();
-		mgr.removeUpdates(onLocationChange);
 	}
 	
 	public void updateMapPosition(LatLng position) {
