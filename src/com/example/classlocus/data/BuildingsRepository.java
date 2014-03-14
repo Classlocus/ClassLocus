@@ -10,9 +10,11 @@ import android.database.Cursor;
 public class BuildingsRepository {
 
 	private DatabaseHelper dbHelper;
+	private BuildingsTableManager manager;
 	
 	public BuildingsRepository(Context context) {
 		dbHelper = DatabaseHelper.getInstance(context);
+		manager = new BuildingsTableManager(context);
 	}
 
 	// deletes all buildings from the database
@@ -28,7 +30,9 @@ public class BuildingsRepository {
 		long parentId = building.getParentId();
 		boolean accessible = building.getAccessible();
 		
-		return dbHelper.insert(name, abbreviation, latLng, parentId, accessible);
+		return manager.insert(name, abbreviation, latLng, parentId, accessible);
+		
+		//return dbHelper.insert(name, abbreviation, latLng, parentId, accessible);
 	}
 	
 	// deletes from database

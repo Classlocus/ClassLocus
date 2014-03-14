@@ -17,15 +17,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static DatabaseHelper sInstance;
 	private SQLiteDatabase database;
 	
-	private static final String TAG = "LocusDatabase";
-	public static final String DATABASE_NAME = "locus.db";
-	private static final int DATABASE_VERSION = 2;
-	
 	public static final String TABLE_BUILDINGS = "buildings";
 	public static final String TABLE_FAVORITES = "favorites";
 	public static final String TABLE_BUILDINGS_FTS = "buildings_fts";
-	private static final String TABLE_BUILDINGS_INSERT = "buildings_insert";
-	private static final String TABLE_BUILDINGS_DELETE = "buildings_delete";
 	
 	public static final String COLUMN_ID = BaseColumns._ID;
 	public static final String COLUMN_NAME = "name";
@@ -47,72 +41,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	private DatabaseHelper(Context context) {
-		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
 		database = getWritableDatabase();
 	}
 	
 	@Override
+	public void onConfigure(SQLiteDatabase db) {
+		// Enable foreign key constraints (requires API 16 or higher)
+		db.setForeignKeyConstraintsEnabled(true);
+	}
+	
+	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.w(DatabaseHelper.class.getName(), "Updating " + TAG + " schema");
+		Log.w(DatabaseHelper.class.getName(), "Updating " + DatabaseContract.DATABASE_TAG + " schema");
 		
-		db.execSQL("PRAGMA foreign_keys=ON;");
-		
-		db.execSQL("CREATE TABLE " + TABLE_BUILDINGS + " ("
-				+ COLUMN_ID + " integer primary key autoincrement, "
-				+ COLUMN_NAME + " text not null unique, " 
-				+ COLUMN_ABBR + " text, " 
-				+ COLUMN_LAT + " float, " 
-				+ COLUMN_LONG + " float, " 
-				+ COLUMN_PARENT + " integer, "
-				+ COLUMN_ACCESS + " bit not null);");
-		
-		db.execSQL("CREATE VIRTUAL TABLE " + TABLE_BUILDINGS_FTS + " USING fts3("
-				+ COLUMN_ID + ", " + COLUMN_NAME + ", "
-				+ COLUMN_ABBR + ", " + COLUMN_LAT + ", " 
-				+ COLUMN_LONG + ", " + COLUMN_PARENT + ", " 
-				+ COLUMN_ACCESS + ");");
-		
-		// trigger for record insertion
-		db.execSQL("CREATE TRIGGER " + TABLE_BUILDINGS_INSERT
-				+ " AFTER INSERT ON " + TABLE_BUILDINGS
-				+ " BEGIN "
-					+ "INSERT INTO " + TABLE_BUILDINGS_FTS + "(rowid, " + COLUMN_ID + ", " 
-					+ COLUMN_NAME + ", " + COLUMN_ABBR + ", " + COLUMN_LAT + ", "
-					+ COLUMN_LONG + ", " + COLUMN_PARENT + ", " + COLUMN_ACCESS + ") "
-					+ "VALUES (last_insert_rowid(), last_insert_rowid(), "
-					+ "NEW." + COLUMN_NAME + ", NEW." + COLUMN_ABBR + ", "
-					+ "NEW." + COLUMN_LAT + ", NEW." + COLUMN_LONG + ", "
-					+ "NEW." + COLUMN_PARENT + ", NEW." + COLUMN_ACCESS + "); "
-				+ " END ");
-		
-		// trigger for record deletion
-		db.execSQL("CREATE TRIGGER " + TABLE_BUILDINGS_DELETE
-				+ " AFTER DELETE ON " + TABLE_BUILDINGS
-				+ " BEGIN "
-					+ "DELETE FROM " + TABLE_BUILDINGS_FTS + " WHERE rowid = OLD.rowid;"
-				+ " END ");
-		
-		db.execSQL("CREATE TABLE "+ TABLE_FAVORITES + " ("
-				+ FAVORITES_ID + " integer primary key autoincrement, "
-				+ FAVORITES_BUILDING + " integer, FOREIGN KEY(" + FAVORITES_BUILDING + ") REFERENCES " 
-				+ TABLE_BUILDINGS + "(" + COLUMN_ID + ") ON DELETE CASCADE);");
+		db.execSQL(DatabaseContract.BuildingsTable.CREATE_TABLE);
+		db.execSQL(DatabaseContract.BuildingsTable.CREATE_FTS_TABLE);
+		db.execSQL(DatabaseContract.BuildingsTable.CREATE_INSERT_TRIGGER);
+		db.execSQL(DatabaseContract.BuildingsTable.CREATE_DELETE_TRIGGER);
+		db.execSQL(DatabaseContract.FavoritesTable.CREATE_TABLE);
 	}
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.w(DatabaseHelper.class.getName(), "Upgrading " + TAG + " database from version " 
+		Log.w(DatabaseHelper.class.getName(), "Upgrading " + DatabaseContract.DATABASE_TAG + " database from version " 
 				+ oldVersion + " to " + newVersion + ", which will destroy all old data");
 		
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
+		db.execSQL(DatabaseContract.BuildingsTable.DELETE_TABLE);
+		db.execSQL(DatabaseContract.BuildingsTable.DELETE_FTS_TABLE);
+		db.execSQL(DatabaseContract.FavoritesTable.DELETE_TABLE);
 		onCreate(db);
 	}
 	
+	@Override
+	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		onUpgrade(db, oldVersion, newVersion);
+	}
+	
 	public void wipe() {
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS);
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_BUILDINGS_FTS);
-		database.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
+		database.execSQL(DatabaseContract.BuildingsTable.DELETE_TABLE);
+		database.execSQL(DatabaseContract.BuildingsTable.DELETE_FTS_TABLE);
+		database.execSQL(DatabaseContract.FavoritesTable.DELETE_TABLE);
 		onCreate(database);
 	}
 	

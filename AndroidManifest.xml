@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
     
     <uses-permission android:name="android.permission.INTERNET" />
@@ -95,7 +95,7 @@
         	android:parentActivityName="com.example.classlocus.SearchResultsActivity">
         	<meta-data
         	    android:name="android.support.PARENT_ACTIVITY"
-        	    android:value="com.example.classlocus.SearchResultsActivity" />
+        	    android:value="com.example.classlocus.MainActivity" />
         </activity>
         
     </application>

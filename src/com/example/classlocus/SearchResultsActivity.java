@@ -74,6 +74,7 @@ public class SearchResultsActivity extends ListActivity {
 	    
 	    if (itemId == R.id.submit_building) {
 			submitIntent = new Intent(SearchResultsActivity.this, SubmitBuildingActivity.class);
+			this.finish();
 			startActivity(submitIntent);
 			return true;
 	    }

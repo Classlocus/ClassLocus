@@ -23,7 +23,6 @@ import android.widget.SearchView;
 public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
-	private Intent buildingIntent;
 	private Intent helpIntent;
 	
 	@Override
@@ -89,10 +88,6 @@ public class MainActivity extends Activity {
 		if (itemId == R.id.clear_history) {
 			ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
 			PopupAlert.clearSearchHistory(this);
-			return true;
-		} else if (itemId == R.id.building_detail) {
-			buildingIntent = new Intent(MainActivity.this, BuildingDetail.class);
-			startActivity(buildingIntent);
 			return true;
 		} else if (itemId == R.id.help) {
 			helpIntent = new Intent(MainActivity.this, HelpActivity.class);
