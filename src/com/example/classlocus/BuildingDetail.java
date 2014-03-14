@@ -1,34 +1,29 @@
 package com.example.classlocus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.classlocus.data.*;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.*;
 import com.google.maps.android.SphericalUtil;
-import android.app.ActionBar;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.support.v4.app.NavUtils;
 
 public class BuildingDetail extends Activity {
 	
-	LocationManager mgr;
-	Building bd;
+	LocationManager manager;
+	Building building;
 	GoogleMap map;
 	BuildingsRepository db;
 
@@ -46,47 +41,47 @@ public class BuildingDetail extends Activity {
 		map.setMyLocationEnabled(true);
 		map.setBuildingsEnabled(true);
 		
-		mgr = (LocationManager)getSystemService(LOCATION_SERVICE);
+		manager = (LocationManager)getSystemService(LOCATION_SERVICE);
 		
-		double latLang[]; 
+		//double latLang[]; 
 		TextView tv;
 		
 		if (getIntent().hasExtra("buildingID"))
-			bd = populate(getIntent(), db);
+			building = populate(getIntent(), db);
 		
 		//populating fields
-		if (bd != null){
+		if (building != null){
 			tv = (TextView) findViewById(R.id.detail_building_value);
-			tv.setText(bd.getName());
+			tv.setText(building.getName());
 			tv = (TextView) findViewById(R.id.detail_building_accessible_value);
-			if (bd.getAccessible() == true) {
+			if (building.getAccessible() == true) {
 				tv.setText("Yes");
 			} else {
 				tv.setText("No");
 			}
-			latLang = bd.getLatLng();
+			//double[] latLang = bd.getLatLng();
 			tv = (TextView) findViewById(R.id.detail_building_distance_value);
 			tv.setText("Connecting to Satellites...");
 			
 			//Set map
 			map.addMarker(new MarkerOptions()
-	 		.title(bd.getName())
-	 		.position(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1])));
-			updateMapPosition(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]));
+	 		.title(building.getName())
+	 		.position(new LatLng(building.getLatLng()[0], building.getLatLng()[1])));
+			updateMapPosition(new LatLng(building.getLatLng()[0], building.getLatLng()[1]));
 		}
 	}
 	
 	@Override
 	public void onResume(){
 		super.onResume();
-		mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
+		manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, onLocationChange);
 		map.setIndoorEnabled(true);
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mgr.removeUpdates(onLocationChange);
+		manager.removeUpdates(onLocationChange);
 		map.setIndoorEnabled(false);
 	}
 	
@@ -99,10 +94,11 @@ public class BuildingDetail extends Activity {
 
 	@Override
     public boolean onPrepareOptionsMenu (Menu menu){
-		MenuItem fav;
-		getMenuInflater().inflate(R.menu.building_detail, menu);
-	    fav = menu.findItem(R.id.action_favorites);
-	    if(db.isFavorite(bd)){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.building_detail, menu);
+		
+	    MenuItem fav = menu.findItem(R.id.action_favorites);
+	    if(db.isFavorite(building)){
 	    	fav.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 	    }
 	    return true;
@@ -111,9 +107,6 @@ public class BuildingDetail extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
 		case R.id.action_favorites:
 			item.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 			addToFavorites();
@@ -129,18 +122,16 @@ public class BuildingDetail extends Activity {
 	}
 	
 	public void addToFavorites() {	
-		db.saveFavorite(bd);
+		db.saveFavorite(building);
 	}
 	
 	public void updateMapPosition(LatLng position) {
-		
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 15));
 		map.animateCamera(CameraUpdateFactory.zoomIn());
 		map.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 	}
 	
 	public int calculateTime(double distance) {
-		
 		double walkingspeed = 1.78816;
 		int result = (int) (distance / walkingspeed);
 		return result;
@@ -159,7 +150,7 @@ public class BuildingDetail extends Activity {
 		public void onLocationChanged(Location location) {
 			Log.i("classLocus", "Updating location");
 			TextView tv = (TextView) findViewById(R.id.detail_building_distance_value);
-			double distance = buildingDistance(new LatLng(bd.getLatLng()[0], bd.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude()));
+			double distance = buildingDistance(new LatLng(building.getLatLng()[0], building.getLatLng()[1]), new LatLng(location.getLatitude(),location.getLongitude()));
 			tv.setText(formatDistance(distance, calculateTime(distance)));
 		}
 

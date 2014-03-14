@@ -53,9 +53,7 @@ public class SearchResultsActivity extends ListActivity {
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())){
 			String query = intent.getStringExtra(SearchManager.QUERY);
-			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, 
-					SearchSuggestionProvider.AUTHORITY, 
-					SearchSuggestionProvider.MODE);
+			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this, SearchSuggestionProvider.AUTHORITY, SearchSuggestionProvider.MODE);
 			suggestions.saveRecentQuery(query, null);
 		}
 	}
@@ -65,21 +63,30 @@ public class SearchResultsActivity extends ListActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.search_results_menu, menu);
 		
-		return super.onCreateOptionsMenu(menu);
-				
+		return super.onCreateOptionsMenu(menu);		
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    int itemId = item.getItemId();
-	    
-	    if (itemId == R.id.submit_building) {
+		switch (item.getItemId()) {
+		case R.id.submit_building:
 			submitIntent = new Intent(SearchResultsActivity.this, SubmitBuildingActivity.class);
 			this.finish();
 			startActivity(submitIntent);
 			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 	    }
-	    
-		return false;
+	}
+	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id){
+		super.onListItemClick(l, v, position, id);
+		
+		//OnClick for a given button item, given the index in the array.
+		Intent detailsIntent = new Intent(this, BuildingDetail.class);
+		long buildingID = idArray[position];
+		detailsIntent.putExtra("buildingID", buildingID);
+		startActivity(detailsIntent);
 	}
 	
 	@Override
@@ -108,16 +115,5 @@ public class SearchResultsActivity extends ListActivity {
 			
 			setListAdapter(adp);
 		}
-	}
-	
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id){
-		super.onListItemClick(l, v, position, id);
-		
-		//OnClick for a given button item, given the index in the array.
-		Intent i = new Intent(this, BuildingDetail.class);
-		long buildingID = idArray[position];
-		i.putExtra("buildingID", buildingID);
-		startActivity(i);
 	}
 }

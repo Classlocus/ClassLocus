@@ -33,8 +33,18 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="80dp"
         android:onClick="goToWiki"
         android:text="@string/wiki_link_text" />
+    
+    <Button 
+        android:id="@+id/disclaimerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:onClick="displayDisclaimer"
+        android:text="@string/disclaimer_button_text" />
 
 </RelativeLayout>

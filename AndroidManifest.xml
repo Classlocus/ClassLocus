@@ -81,7 +81,7 @@
         </activity>
         
         <activity
-        	android:name="com.example.classlocus.HelpActivity"
+        	android:name="com.example.classlocus.AboutActivity"
         	android:label="@string/title_help"
         	android:parentActivityName="com.example.classlocus.MainActivity">
         	<meta-data

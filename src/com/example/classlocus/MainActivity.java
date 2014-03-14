@@ -1,7 +1,6 @@
 package com.example.classlocus;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.SearchableInfo;
 import android.os.Bundle;
 import android.content.Intent;
@@ -22,7 +21,7 @@ import android.widget.SearchView;
 public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
-	private Intent helpIntent;
+	private Intent aboutIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,28 +74,18 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    int itemId = item.getItemId();
-	    
-		if (itemId == R.id.clear_history) {
+		switch (item.getItemId()) {
+		case R.id.clear_history:
 			ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
 			PopupAlert.clearSearchHistory(this);
 			return true;
-		} else if (itemId == R.id.help) {
-			helpIntent = new Intent(MainActivity.this, HelpActivity.class);
-			startActivity(helpIntent);
+		case R.id.about:
+			aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+			startActivity(aboutIntent);
 			return true;
-		} else if (itemId == R.id.legalnotices) {
-			String LicenseInfo = GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(
-			        getApplicationContext());
-			AlertDialog.Builder LicenseDialog = new AlertDialog.Builder(MainActivity.this);
-			LicenseDialog.setTitle("Legal Notices");
-			LicenseDialog.setMessage(LicenseInfo);
-			LicenseDialog.show();
-		}
-		else {
+		default:
 			return super.onOptionsItemSelected(item);
 		}
-		return false;
 	}
 	
 	@Override
@@ -108,8 +97,9 @@ public class MainActivity extends Activity {
 					finish();
 				}
 				return;
+			default:
+				super.onActivityResult(requestCode, resultCode, data);
 		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	private boolean checkPlayServices() {
