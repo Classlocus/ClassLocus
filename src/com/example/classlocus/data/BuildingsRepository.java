@@ -122,15 +122,14 @@ public class BuildingsRepository {
 		return building;
 	}
 	
-	public boolean searchFavorites(Building building) {
-		Cursor cursor = buildingsManager.read(building.getId());
+	public int searchFavorites(Building building) {
+		Cursor cursor = favoritesManager.read(building.getId());
 		
 		cursor.moveToFirst();
 		if (cursor.getCount() > 0) { 
-			return true;
+			return cursor.getInt(0);
 		}
-		
-		return false;
+		return 0;
 	}
 	
 	public List<Building> getAllFavorites() {
@@ -140,7 +139,7 @@ public class BuildingsRepository {
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Building building = cursorToBuilding(cursor);
-			if (searchFavorites(building)) {
+			if (searchFavorites(building) > 0) {
 				buildings.add(building);
 			}
 			cursor.moveToNext();
