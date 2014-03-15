@@ -9,17 +9,27 @@ import android.database.Cursor;
 
 public class BuildingsRepository {
 
-	private DatabaseHelper dbHelper;
-	private BuildingsTableManager manager;
+	private BuildingsTableManager buildingsManager;
+	private FavoritesTableManager favoritesManager;
 	
 	public BuildingsRepository(Context context) {
-		dbHelper = DatabaseHelper.getInstance(context);
-		manager = new BuildingsTableManager(context);
+		buildingsManager = new BuildingsTableManager(context);
+		favoritesManager = new FavoritesTableManager(context);
 	}
 
 	// deletes all buildings from the database
-	public void cleanBuilding() {
-		dbHelper.wipe();
+	public void cleanRepository() {
+		Cursor cursor = null;
+		cursor = buildingsManager.search("");
+		
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Building building = cursorToBuilding(cursor);
+			buildingsManager.remove(building.getId());
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
 	}
 	
 	// create/update available through this method
@@ -30,38 +40,23 @@ public class BuildingsRepository {
 		long parentId = building.getParentId();
 		boolean accessible = building.getAccessible();
 		
-		return manager.insert(name, abbreviation, latLng, parentId, accessible);
-		
-		//return dbHelper.insert(name, abbreviation, latLng, parentId, accessible);
+		return buildingsManager.insert(name, abbreviation, latLng, parentId, accessible);
 	}
 	
 	// deletes from database
 	public boolean deleteBuilding(Building building) {
-		Cursor cursor = dbHelper.read(building.getId()); 
+		Cursor cursor = buildingsManager.read(building.getId()); 
 		if (cursor.getCount() > 0) {
-			return dbHelper.remove(building.getId());
+			return buildingsManager.remove(building.getId());
 		}
 		
-		cursor = dbHelper.search(building.getName());
+		cursor = buildingsManager.search(building.getName());
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
 			Building target = cursorToBuilding(cursor);
-			return dbHelper.remove(target.getId());
+			return buildingsManager.remove(target.getId());
 		}
 		
-		return false;
-	}
-	
-	public long saveFavorite(Building building) {
-		
-		return dbHelper.insert(building.getId());
-	}
-	
-	public boolean isFavorite(Building building) {
-		Cursor cursor = dbHelper.exists(building.getId());
-		if (cursor.getCount() == 1) {
-			return true;
-		}
 		return false;
 	}
 	
@@ -70,7 +65,7 @@ public class BuildingsRepository {
 		List<Building> buildings = new ArrayList<Building>();
 		Cursor cursor = null;
 		
-		cursor = dbHelper.read(id);
+		cursor = buildingsManager.read(id);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -88,12 +83,66 @@ public class BuildingsRepository {
 		List<Building> buildings = new ArrayList<Building>();
 		Cursor cursor = null;
 		
-		cursor = dbHelper.search(query);
+		cursor = buildingsManager.search(query);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Building building = cursorToBuilding(cursor);
 			buildings.add(building);
+			cursor.moveToNext();
+		}
+		
+		cursor.close();
+		return buildings;
+	}
+	
+	public long saveFavorite(Building building) {
+		return favoritesManager.insert(building.getId());
+	}
+	
+	public boolean deleteFavorite(int fid) {
+		return favoritesManager.remove(fid);
+	}
+	
+	public Building searchFavorites(int fid) {
+		Cursor cursor = null;
+		Building building = null;
+		
+		cursor = favoritesManager.read(fid);
+		
+		if (cursor.getCount() > 0) {
+			cursor.moveToFirst();
+			int bid = cursor.getInt(1);
+			
+			cursor = buildingsManager.read(bid);
+			building = cursorToBuilding(cursor);
+		}
+		
+		cursor.close();
+		return building;
+	}
+	
+	public boolean searchFavorites(Building building) {
+		Cursor cursor = buildingsManager.read(building.getId());
+		
+		cursor.moveToFirst();
+		if (cursor.getCount() > 0) { 
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public List<Building> getAllFavorites() {
+		List<Building> buildings = new ArrayList<Building>();
+		Cursor cursor = buildingsManager.search("");
+		
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			Building building = cursorToBuilding(cursor);
+			if (searchFavorites(building)) {
+				buildings.add(building);
+			}
 			cursor.moveToNext();
 		}
 		

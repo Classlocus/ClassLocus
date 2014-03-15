@@ -98,7 +98,7 @@ public class BuildingDetail extends Activity {
 		inflater.inflate(R.menu.building_detail, menu);
 		
 	    MenuItem fav = menu.findItem(R.id.action_favorites);
-	    if(db.isFavorite(building)){
+	    if(db.searchFavorites(building)){
 	    	fav.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 	    }
 	    return true;
