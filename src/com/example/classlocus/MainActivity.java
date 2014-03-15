@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private Intent aboutIntent;
+	private Intent favoriteIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,10 @@ public class MainActivity extends Activity {
 		case R.id.about:
 			aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
 			startActivity(aboutIntent);
+			return true;
+		case R.id.favorite_list:
+			favoriteIntent = new Intent(MainActivity.this, FavoriteListActivity.class);
+			startActivity(favoriteIntent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

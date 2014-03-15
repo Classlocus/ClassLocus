@@ -7,6 +7,9 @@
           android:showAsAction="collapseActionView|ifRoom"
           android:actionViewClass="android.widget.SearchView" />
     
+    <item android:id="@+id/favorite_list"
+          android:title="@string/favorite_title" />
+    
     <item android:id="@+id/clear_history"
           android:title="@string/action_clear_history" />
     
