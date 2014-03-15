@@ -1,0 +1,89 @@
+package com.example.classlocus.data;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import android.R;
+import android.content.Context;
+import android.util.Log;
+
+public class BuildingGenerator {
+
+	public static void initialDbState(Context c){
+		BuildingsRepository database = new BuildingsRepository(c);
+		
+		InputStream  in = c.getResources().openRawResource(
+			c.getResources().getIdentifier("raw/gps_coords",
+				"raw", c.getPackageName()));
+		BufferedReader input = new BufferedReader(new InputStreamReader(in), 1024 * 8);
+		
+		String line;
+		try{
+			while ((line = input.readLine()) != null){
+				Building a = new Building();
+				
+				String name = "";
+				boolean nameDone = false;
+				String abbr = "";
+				boolean abbrDone = false;
+				String lat = "";
+				boolean latDone = false;
+				String lng = "";
+				boolean lngDone = false;
+				String acc = "";
+				for (int i = 0; i < line.length(); i++){
+					if (!nameDone){
+						if (line.charAt(i) == '|'){
+							nameDone = true;
+							continue;
+						}
+						name = name.concat(String.valueOf(line.charAt(i)));
+					}
+					else if (!abbrDone){
+						if (line.charAt(i) == '|'){
+							abbrDone = true;
+							continue;
+						}
+						abbr = abbr.concat(String.valueOf(line.charAt(i)));
+					}
+					else if (!latDone){
+						if (line.charAt(i) == '|'){
+							latDone = true;
+							continue;
+						}
+						lat = lat.concat(String.valueOf(line.charAt(i)));
+					}
+					else if (!lngDone){
+						if (line.charAt(i) == '|'){
+							lngDone = true;
+							continue;
+						}
+						lng = lng.concat(String.valueOf(line.charAt(i)));
+					}
+					else{
+						acc = acc.concat(String.valueOf(line.charAt(i)));
+					}
+				}
+				
+				a.setName(name);
+				a.setAbbreviation(abbr);
+				a.setLatLng(Double.valueOf(lat), Double.valueOf(lng));
+				a.setParentId(10);
+				if (Boolean.valueOf(acc)){
+					a.setAccessible(true);
+				}
+				else {
+					a.setAccessible(false);
+				}
+				
+			
+				database.saveBuilding(a);
+			}
+		}
+		catch (IOException err){
+			Log.e("classLocus", "Error reading gps coords file.");
+		}
+	}
+}

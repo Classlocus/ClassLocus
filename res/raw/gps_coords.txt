@@ -1,0 +1,99 @@
+Wiegand Hall(WGND): 44.567139, -123.285399, y
+Withycombe Hall(WITH): 44.567085, -123.283478, y
+Cordley Hall(CORD): 44.567062, -123.281268, y
+Hallie Ford Center(HFC): 44.567040, -123.280367, y
+Bate Hall(BATE): 44.567399, -123.280260, y
+Ballard Extension Hall(BALE): 44.567231, -123.279691, n
+Kelley Engineering Center(KEC): 44.567231, -123.278468, y
+Plageman Student Health Center(PSHC): 44.567750, -123.278350, y
+Weniger Hall(WNGR): 44.568003, -123.277492, y
+Bexell Hall(BEXL): 44.567040, -123.277374, n
+Gilbert Hall(GILB): 44.567880, -123.276687 y
+Gleeson Hall(GLSN): 44.567246, -123.276719 n
+Gilbert Hall Additions(GBAN): 44.567460, -123.276215 n
+Shepard Hall(SHEP): 44.567162, -123.276033 n
+Dearborn Hall(DEAR): 44.567387, -123.275421 n
+Batcheller Hall(ROG): 44.567032, -123.275131 y
+Covell Hall(COVL): 44.567200, -123.274818 y
+Graf Hall(GRAF): 44.567599, -123.274801 y
+Merryfield Hall(MFD): 44.567448, -123.274254 n
+Owen Hall(OWEN): 44.567060, -123.273739 y
+Kearney Hall(KEAR): 44.567010, -123.273326 y
+Benton Hall(BENT): 44.566219, -123.274161 n
+Benton Annex(BNAN): 44.565841, -123.274703 n
+Milne Computer Center(MCC): 44.566372, -123.275331 y
+Kidder Hall(KIDD): 44.566483, -123.276168 y
+Gilkey Hall(GILK): 44.566513, -123.277240 y
+Milam Hall(MLM): 44.566506, -123.278885 y
+Gilmore Hall(GILM): 44.566472, -123.280629 y
+Gilmore Annex(GMAN): 44.566656, -123.280908 y
+Hovland Hall(HOV): 44.566403, -123.281225 n
+Agrictultural & Life Sciences(ALS): 44.566354, -123.281933 y
+Nash Hall(NASH): 44.566358, -123.282550 y
+Linus Pauling Science Center(LPSC): 44.566514, -123.283848 y
+Crop Science Building(CRPS): 44.566296, -123.285286 y
+Radiation Center(RC): 44.565025, -123.289056 y
+Sackett Hall(SACK): 44.565247, -123.283494 y
+Austin Hall(AUST): 44.565034, -123.281965 y
+Women's Building(WB): 44.565665, -123.280581 n
+Fairbanks Annex(FBAN): 44.565126, -123.280763 y
+Fairbanks Hall(FAIR): 44.565099, -123.280382 y
+Memorial Union(MU): 44.564911, -123.278889 y
+Strand Agricultural Hall(STAG): 44.565696, -123.277301 y
+Valley Library(VLIB): 44.565016, -123.276090 y
+Gladys Valley Gymnastics Center(GVGC): 44.564959, -123.275248 n
+Pharmacy Building(PHAR): 44.565249, -123.274749 y
+Joyce Collin Furman Hall(FURMAN): 44.565180, -123.274078 y
+McNary Hall(MCNY): 44.564371, -123.271890 y
+McNary Dining Center(MCDN): 44.564134, -123.272152 y
+Wilson Hall(WIL): 44.563767, -123.272388 y
+Callahan Hall(CAL): 44.563993, -123.273542 y
+Kerr Administration(KAD): 44.564272, -123.274845 y
+McAlexander Fieldhouse(MCAF): 44.563751, -123.275414 y
+Snell Hall(SNEL): 44.564030, -123.276455 y
+Waldo Hall(WALD): 44.564103, -123.277195 y
+Langton Hall(LANG): 44.564126, -123.278418 y
+Moreland Hall(MORE): 44.564267, -123.279410 y
+Native American Longhouse(NALH): 44.564065, -123.279459 y
+Weatherford Hall(WFD): 44.564107, -123.280585 y
+Buxton Hall(BUXT): 44.564405, -123.281508 y
+Poling Hall(POL): 44.563682, -123.281545 y
+Hawley Hall(HAW): 44.564378, -123.282710 y
+Cauthorn Hall(CAU): 44.563694, -123.282645 y
+West Dining Hall(WSDN): 44.563950, -123.283407 y
+Heckart Lodge(HKLG): 44.564313, -123.283369 y
+Reed Lodge(RDLG): 44.564317, -123.284002 y
+West Hall(WEST): 44.563671, -123.284099 y
+Peavy Hall(PVY): 44.564084, -123.285510 y
+Richardson Hal(RICH)l: 44.563686, -123.286052 y
+Forest Science Lab(FSL): 44.564101, -123.287957 y
+Energy Center(EC): 44.564074, -123.289164 y 
+Poultry Research Facilities(PBHG): 44.563054, -123.288413 n
+Laboratory Animal Resource Center(LAR): 44.562409, -123.286230 y
+Veterinary Research Laboratory(VRL): 44.562546, -123.285506 y
+Dryden Hall(BRYD): 44.563081, -123.285093 y
+Dixon Recreation Center(DXRC): 44.563233, -123.278747 y
+Goss Stadium(GOSS): 44.563382, -123.277868 y
+Naval ROTC Armory(NAVY): 44.562209, -123.278007 y
+Adams Hall(ADAM): 44.561449, -123.274636 y
+Cascade Hall(CASC): 44.561575, -123.275558 y
+Carrie Halsell Residence Hall(HAL): 44.561138, -123.276615 y
+International Living-Learning Center(ILLC): 44.560178, -123.276100 y
+Finley Hall(FINL): 44.560178, -123.276100 y
+Arnold Dining Center(ARND): 44.560652, -123.277682 y
+Bloss Hall(BLSS): 44.560159, -123.277607 y
+Parking Structure 1(PS1): 44.561325, -123.278863 y
+Beth Ray Center for Academic Support(BRC): 44.560603, -123.278562 y
+Cesar Chavez Cultural Center(CECH): 44.560503, -123.279313 n
+CH2M HILL Alumni Center(CHAC): 44.559915, -123.278943 y
+LaSells Stewart Center(LSC): 44.559077, -123.278868 y
+Softball Complex(SC): 44.558184, -123.277133 y
+Paul Lorenz Field(LSF): 44.558184, -123.277133 y
+Whyte Track and Field Center(WHYTE): 44.558184, -123.277133 y
+Reser Stadium(RESR): 44.559542, -123.281167 y
+Valley Football Center(VFBC): 44.560188, -123.282282 y
+Gill Coliseum(GILL): 44.561292, -123.280701 y
+Sports Performance Center(SPC): 44.561188, -123.281742 y
+Merrit Truax Indoor Practice Facility(INDP): 44.561215, -123.283971 y
+Magruder Hall(MAGR): 44.560694, -123.285700 y
+Hatfield Marine Science Center(HMSC): 44.621499, -124.043946 y
