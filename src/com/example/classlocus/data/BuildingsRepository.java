@@ -20,7 +20,7 @@ public class BuildingsRepository {
 	// deletes all buildings from the database
 	public void cleanRepository() {
 		Cursor cursor = null;
-		cursor = buildingsManager.search("");
+		cursor = buildingsManager.read(0);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
