@@ -98,7 +98,7 @@ public class BuildingDetail extends Activity {
 		inflater.inflate(R.menu.building_detail, menu);
 		
 	    MenuItem fav = menu.findItem(R.id.action_favorites);
-	    if(db.searchFavorites(building)){
+	    if(db.searchFavorites(building) != 0){
 	    	fav.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 	    }
 	    return true;
@@ -106,10 +106,17 @@ public class BuildingDetail extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		int fid;
 		switch (item.getItemId()) {
 		case R.id.action_favorites:
-			item.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
-			addToFavorites();
+			fid = db.searchFavorites(building);
+			if (fid != 0) {
+				db.deleteFavorite(fid);
+				item.setIcon(getResources().getDrawable(R.drawable.ic_action_not_important));
+			} else {
+				db.saveFavorite(building);
+				item.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

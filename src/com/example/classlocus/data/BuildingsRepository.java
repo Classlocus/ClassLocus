@@ -123,7 +123,7 @@ public class BuildingsRepository {
 	}
 	
 	public int searchFavorites(Building building) {
-		Cursor cursor = favoritesManager.read(building.getId());
+		Cursor cursor = favoritesManager.search(building.getId());
 		
 		cursor.moveToFirst();
 		if (cursor.getCount() > 0) { 
