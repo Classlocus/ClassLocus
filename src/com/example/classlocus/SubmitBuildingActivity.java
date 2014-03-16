@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class SubmitBuildingActivity extends Activity {
@@ -60,13 +59,22 @@ public class SubmitBuildingActivity extends Activity {
 					building.setAccessible(false);
 				}
 
-				if (database != null) {
-					// TextView textView2 = (TextView)
-					// findViewById(R.id.textView2);
-					long id = database.saveBuilding(building);
-					if (id > 0) {
-						// textView2.setText("Building Added (id: " + id + ")");
+				if ((!buildingNameText.getText().toString().matches(""))
+						&& (!buildingAbbvText.getText().toString().matches(""))
+						&& (latitude != 0) && (longitude != 0)) {
+					if (database != null) {
+						long id = database.saveBuilding(building);
+						if (id > 0) {
+							Toast.makeText(SubmitBuildingActivity.this,
+									"Building Added (id: " + id + ")",
+									Toast.LENGTH_SHORT).show();
+						}
 					}
+				} else {
+					Toast.makeText(
+							SubmitBuildingActivity.this,
+							"Failed to add building. Ensure you have building name and abbreviation fields filled, and place a marker for building location",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -99,7 +107,7 @@ public class SubmitBuildingActivity extends Activity {
 			map.setMyLocationEnabled(true);
 			map.setBuildingsEnabled(true);
 			map.setIndoorEnabled(true);
-
+			
 			map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
 
 				@Override
@@ -119,15 +127,17 @@ public class SubmitBuildingActivity extends Activity {
 					latitude = coordinates.latitude;
 					longitude = coordinates.longitude;
 
-					TextView tvLat = (TextView) findViewById(R.id.tvLat);
-					tvLat.setText(Double.toString(latitude));
-
-					TextView tvLng = (TextView) findViewById(R.id.tvLng);
-					tvLng.setText(Double.toString(longitude));
-
 				}
 			});
 		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(
+				R.id.submitBuildingMap)).getMap();
+		map.setIndoorEnabled(false);
 	}
 
 	private boolean checkPlayServices() {
