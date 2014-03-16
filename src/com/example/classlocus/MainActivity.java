@@ -5,8 +5,6 @@ import android.app.SearchableInfo;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.Context;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.view.*;
 

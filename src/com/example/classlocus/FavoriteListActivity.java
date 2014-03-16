@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.example.classlocus.data.*;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
