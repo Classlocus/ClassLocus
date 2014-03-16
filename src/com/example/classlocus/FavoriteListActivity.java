@@ -11,10 +11,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class FavoriteListActivity extends ListActivity {
 
+	private Intent detailsIntent;
 	BuildingsRepository database;
+	private TextView infoText;
 	List<Building> buildings;
 	long[] idArray;
 	
@@ -23,8 +26,9 @@ public class FavoriteListActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.activity_favorite_list);
 		
-		database = new BuildingsRepository(this);
+		infoText = (TextView) findViewById(R.id.infoText);
 		
+		database = new BuildingsRepository(this);
 		buildings = database.getAllFavorites();
 		
 		Object[] buildingNames = new Object[buildings.size()];
@@ -37,15 +41,23 @@ public class FavoriteListActivity extends ListActivity {
 			i++;
 		}
 		
+		if (buildingNames.length <= 0) {
+			infoText.setText("No favorites found");
+		}
+		
 		ArrayAdapter adp = new ArrayAdapter(this, android.R.layout.simple_list_item_1, buildingNames);
 		
 		setListAdapter(adp);
 	}
 	
-	
-	
-
-
-	
-	
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id){
+		super.onListItemClick(l, v, position, id);
+		
+		//OnClick for a given button item, given the index in the array.
+		detailsIntent = new Intent(this, BuildingDetail.class);
+		long buildingID = idArray[position];
+		detailsIntent.putExtra("buildingID", buildingID);
+		startActivity(detailsIntent);
+	}
 }
