@@ -25,7 +25,7 @@ public class BuildingDetail extends Activity {
 	LocationManager manager;
 	Building building;
 	GoogleMap map;
-	BuildingsRepository db;
+	BuildingsRepository database;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class BuildingDetail extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle("Building Detail");
 		
-		db = new BuildingsRepository(this);
+		database = new BuildingsRepository(this);
 		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.details_map)).getMap();
 		map.setMyLocationEnabled(true);
@@ -47,7 +47,7 @@ public class BuildingDetail extends Activity {
 		TextView tv;
 		
 		if (getIntent().hasExtra("buildingID"))
-			building = populate(getIntent(), db);
+			building = populate(getIntent(), database);
 		
 		//populating fields
 		if (building != null){
@@ -98,7 +98,7 @@ public class BuildingDetail extends Activity {
 		inflater.inflate(R.menu.building_detail, menu);
 		
 	    MenuItem fav = menu.findItem(R.id.action_favorites);
-	    if(db.searchFavorites(building) != 0){
+	    if(database.searchFavorites(building) != 0){
 	    	fav.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 	    }
 	    return true;
@@ -109,12 +109,12 @@ public class BuildingDetail extends Activity {
 		int fid;
 		switch (item.getItemId()) {
 		case R.id.action_favorites:
-			fid = db.searchFavorites(building);
+			fid = database.searchFavorites(building);
 			if (fid != 0) {
-				db.deleteFavorite(fid);
+				database.deleteFavorite(fid);
 				item.setIcon(getResources().getDrawable(R.drawable.ic_action_not_important));
 			} else {
-				db.saveFavorite(building);
+				database.saveFavorite(building);
 				item.setIcon(getResources().getDrawable(R.drawable.ic_action_important));
 			}
 			return true;
@@ -129,7 +129,7 @@ public class BuildingDetail extends Activity {
 	}
 	
 	public void addToFavorites() {	
-		db.saveFavorite(building);
+		database.saveFavorite(building);
 	}
 	
 	public void updateMapPosition(LatLng position) {

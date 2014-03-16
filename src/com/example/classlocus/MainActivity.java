@@ -31,8 +31,6 @@ public class MainActivity extends Activity {
 		
 		BuildingGenerator.initialDbState(this);
 		this.setContentView(R.layout.activity_main);
-		
-		
 	}
 	
 	@Override
