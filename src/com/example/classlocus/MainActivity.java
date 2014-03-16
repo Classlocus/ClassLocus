@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
 			ClearSearchHistoryDialog PopupAlert = new ClearSearchHistoryDialog();
 			PopupAlert.clearSearchHistory(this);
 			return true;
-		case R.id.about:
+		case R.id.tvLng:
 			aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
 			startActivity(aboutIntent);
 			return true;

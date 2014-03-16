@@ -10,6 +10,6 @@
     <item android:id="@+id/clear_history"
           android:title="@string/action_clear_history" />
     
-    <item android:id="@+id/about"
+    <item android:id="@+id/tvLng"
           android:title="@string/action_about" />
 </menu>

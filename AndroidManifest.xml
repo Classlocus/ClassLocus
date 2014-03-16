@@ -32,7 +32,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
-    		android:value="AIzaSyCtfcNstuLQEkZvvlKS_ouD40Z6Qrdpl64"/>
+    		android:value="AIzaSyDGpoSXpWv11NuUMOiZsgjGbDtby2WRpHU"/>
         
         <provider android:name="com.example.classlocus.search.SearchSuggestionProvider"
               android:authorities="com.example.classlocus.search.SearchSuggestionProvider" />
