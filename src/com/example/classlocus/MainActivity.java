@@ -5,6 +5,8 @@ import android.app.SearchableInfo;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.Context;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.*;
 
@@ -13,6 +15,7 @@ import com.google.android.gms.maps.model.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import com.example.classlocus.data.BuildingGenerator;
 import com.example.classlocus.search.*;
 
 import android.app.SearchManager;
@@ -26,7 +29,11 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		BuildingGenerator.initialDbState(this);
 		this.setContentView(R.layout.activity_main);
+		
+		
 	}
 	
 	@Override

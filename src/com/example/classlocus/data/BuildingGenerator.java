@@ -17,8 +17,12 @@ public class BuildingGenerator {
 		InputStream  in = c.getResources().openRawResource(
 			c.getResources().getIdentifier("raw/gps_coords",
 				"raw", c.getPackageName()));
+		if (in != null){
+			Log.e("classLocus", "Loaded file");
+		} else{
+			Log.e("classLocus", "Could not open file");
+		}
 		BufferedReader input = new BufferedReader(new InputStreamReader(in), 1024 * 8);
-		
 		String line;
 		try{
 			while ((line = input.readLine()) != null){
@@ -67,6 +71,13 @@ public class BuildingGenerator {
 					}
 				}
 				
+				Log.d("classLocus", "Loading...");
+				Log.d("classLocus", "Name: " + name + "(" + name.length() + ")");
+				Log.d("classLocus", "Abbreviation: " + abbr + "(" + abbr.length() + ")");
+				Log.d("classLocus", "Lat: " + lat + "(" + lat.length() + ")");
+				Log.d("classLocus", "Long: " + lng + "(" + lng.length() + ")");
+				Log.d("classLocus", "Accessibility: " + acc + "(" + acc.length() + ")");
+				Log.d("classLocus", "\n");
 				a.setName(name);
 				a.setAbbreviation(abbr);
 				a.setLatLng(Double.valueOf(lat), Double.valueOf(lng));
@@ -77,9 +88,13 @@ public class BuildingGenerator {
 				else {
 					a.setAccessible(false);
 				}
-				
+				if (name == "PeavyHall"){
+					break;
+				}
 			
 				database.saveBuilding(a);
+				Log.d("classLocus", "Loaded Building!");
+				
 			}
 		}
 		catch (IOException err){

@@ -39,15 +39,6 @@ public class SearchResultsActivity extends ListActivity {
 		
 		database = new BuildingsRepository(this);
 		
-		Building a = new Building();
-		a.setName("Reser Stadium");
-		a.setAbbreviation("RES");
-		a.setLatLng(44.5597236, -123.2825924);
-		a.setParentId(10);
-		a.setAccessible(true);
-		
-		database.saveBuilding(a);
-		
 		handleIntent(getIntent());
 		
 		Intent intent = getIntent();
