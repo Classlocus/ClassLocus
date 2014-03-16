@@ -23,6 +23,7 @@ public class SearchResultsActivity extends ListActivity {
 	
 	private TextView textQuery;
 	private Intent submitIntent;
+	private Intent detailsIntent;
 	BuildingsRepository database;
 	List<Building> buildings;
 	long[] idArray;
@@ -38,15 +39,6 @@ public class SearchResultsActivity extends ListActivity {
 		textQuery = (TextView) findViewById(R.id.textQuery);
 		
 		database = new BuildingsRepository(this);
-		
-		Building a = new Building();
-		a.setName("Reser Stadium");
-		a.setAbbreviation("RES");
-		a.setLatLng(44.5597236, -123.2825924);
-		a.setParentId(10);
-		a.setAccessible(true);
-		
-		database.saveBuilding(a);
 		
 		handleIntent(getIntent());
 		
@@ -83,7 +75,7 @@ public class SearchResultsActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		
 		//OnClick for a given button item, given the index in the array.
-		Intent detailsIntent = new Intent(this, BuildingDetail.class);
+		detailsIntent = new Intent(this, BuildingDetail.class);
 		long buildingID = idArray[position];
 		detailsIntent.putExtra("buildingID", buildingID);
 		startActivity(detailsIntent);

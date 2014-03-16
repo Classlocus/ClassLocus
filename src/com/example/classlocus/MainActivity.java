@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.*;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import com.example.classlocus.data.BuildingGenerator;
 import com.example.classlocus.search.*;
 
 import android.app.SearchManager;
@@ -22,11 +23,16 @@ public class MainActivity extends Activity {
 	
 	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	private Intent aboutIntent;
+	private Intent favoriteIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		BuildingGenerator.initialDbState(this);
 		this.setContentView(R.layout.activity_main);
+		
+		
 	}
 	
 	@Override
@@ -82,6 +88,10 @@ public class MainActivity extends Activity {
 		case R.id.about:
 			aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
 			startActivity(aboutIntent);
+			return true;
+		case R.id.favorite_list:
+			favoriteIntent = new Intent(MainActivity.this, FavoriteListActivity.class);
+			startActivity(favoriteIntent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

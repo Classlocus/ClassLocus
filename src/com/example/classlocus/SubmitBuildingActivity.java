@@ -2,16 +2,8 @@ package com.example.classlocus;
 
 import com.example.classlocus.data.Building;
 import com.example.classlocus.data.BuildingsRepository;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -21,20 +13,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.TextView;
 
 public class SubmitBuildingActivity extends Activity {
-	static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1001;
 	Building building = new Building();
 	BuildingsRepository database = new BuildingsRepository(this);
-	double latitude;
-	double longitude;
-	Marker marker;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_submit_building);
-
+		setContentView(R.layout.activity_submit_building);
+		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle("New Building");
 
@@ -51,7 +40,7 @@ public class SubmitBuildingActivity extends Activity {
 				building.setName(buildingName);
 				building.setAbbreviation(buildingAbbv);
 				building.setParentId(10);
-				building.setLatLng(latitude, longitude);
+				building.setLatLng(44.56718, -123.27852);
 
 				if (checkBox.isChecked()) {
 					building.setAccessible(true);
@@ -69,6 +58,11 @@ public class SubmitBuildingActivity extends Activity {
 									"Building Added (id: " + id + ")",
 									Toast.LENGTH_SHORT).show();
 						}
+				if (database != null) {
+					TextView textView2 = (TextView) findViewById(R.id.textView2);
+					long id = database.saveBuilding(building);
+					if (id > 0) {
+						textView2.setText("Building Added (id: " + id + ")");
 					}
 				} else {
 					Toast.makeText(
@@ -171,5 +165,4 @@ public class SubmitBuildingActivity extends Activity {
 			super.onActivityResult(requestCode, resultCode, data);
 		}
 	}
-
 }

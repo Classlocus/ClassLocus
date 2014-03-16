@@ -58,7 +58,9 @@ public class BuildingsTableManager {
 							 DatabaseContract.BuildingsTable.COLUMN_PARENT, 
 							 DatabaseContract.BuildingsTable.COLUMN_ACCESS };
 		String selection = DatabaseContract.BuildingsTable.COLUMN_ID + " = " + id;
-						
+		if (id == 0) {
+			selection = null;
+		}
 		return database.query(DatabaseContract.TABLE_BUILDINGS, columns, selection, null, null, null, null);
 	}
 		
