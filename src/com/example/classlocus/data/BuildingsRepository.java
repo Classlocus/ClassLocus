@@ -20,7 +20,7 @@ public class BuildingsRepository {
 	// deletes all buildings from the database
 	public void cleanRepository() {
 		Cursor cursor = null;
-		cursor = buildingsManager.search("");
+		cursor = buildingsManager.read(0);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
@@ -134,7 +134,7 @@ public class BuildingsRepository {
 	
 	public List<Building> getAllFavorites() {
 		List<Building> buildings = new ArrayList<Building>();
-		Cursor cursor = buildingsManager.search("");
+		Cursor cursor = buildingsManager.read(0);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

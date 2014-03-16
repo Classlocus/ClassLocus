@@ -43,5 +43,6 @@
         <item>Nicholas Nelson</item>
     </string-array>
     <string name="save_favorites">save</string>
+    <string name="favorite_title">Favorites</string>
 
 </resources>
