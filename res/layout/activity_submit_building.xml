@@ -54,6 +54,8 @@
         android:layout_above="@+id/submit_button"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/checkBox1"
+        map:cameraTargetLat="44.5657285"
+		map:cameraTargetLng="-123.2788689"
         map:cameraTilt="30"
         map:cameraZoom="15"
         map:mapType="normal"
@@ -74,19 +76,11 @@
         android:text="@string/submit" />
 
     <TextView
-        android:id="@+id/tvLat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/submitBuildingMap"
-        android:layout_toRightOf="@+id/submit_button"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/tvLng"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView1"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_toRightOf="@+id/checkBox1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
 </RelativeLayout>
