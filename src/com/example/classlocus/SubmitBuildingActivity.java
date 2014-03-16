@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class SubmitBuildingActivity extends Activity {
@@ -137,7 +136,7 @@ public class SubmitBuildingActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 		GoogleMap map = ((MapFragment) getFragmentManager().findFragmentById(
-				R.id.map)).getMap();
+				R.id.submitBuildingMap)).getMap();
 		map.setIndoorEnabled(false);
 	}
 
