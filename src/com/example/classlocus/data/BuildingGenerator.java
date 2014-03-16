@@ -82,14 +82,11 @@ public class BuildingGenerator {
 				a.setAbbreviation(abbr);
 				a.setLatLng(Double.valueOf(lat), Double.valueOf(lng));
 				a.setParentId(10);
-				if (Boolean.valueOf(acc)){
+				if (acc.compareToIgnoreCase("y") == 0){
 					a.setAccessible(true);
 				}
 				else {
 					a.setAccessible(false);
-				}
-				if (name == "PeavyHall"){
-					break;
 				}
 			
 				database.saveBuilding(a);
