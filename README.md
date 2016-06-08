@@ -1,4 +1,4 @@
-Classlocus
+ClassLocus
 ==========
 
 The project requires the following additional library projects to compile correctly:
@@ -10,10 +10,10 @@ The project requires the following additional library projects to compile correc
 To install the Google Play services SDK for development:
 
 1) Launch the SDK Manager in one of the following ways:
-	- In Android Studio, click SDK Manager  in the toolbar.
-	- In Eclipse (with ADT), select Window > Android SDK Manager.
-	- On Windows, double-click the SDK Manager.exe file at the root of the Android SDK directory.
-	- On Mac or Linux, open a terminal and navigate to the tools/ directory in the Android SDK, then execute 		android sdk.
+* In Android Studio, click SDK Manager  in the toolbar.
+* In Eclipse (with ADT), select Window > Android SDK Manager.
+* On Windows, double-click the SDK Manager.exe file at the root of the Android SDK directory.
+* On Mac or Linux, open a terminal and navigate to the tools/ directory in the Android SDK, then execute 		android sdk.
 
 2) Install the Google Play services SDK.
 
